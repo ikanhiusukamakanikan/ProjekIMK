@@ -2,4 +2,5 @@
   <Project Path="sc.terrain.painter.editor.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
   <Project Path="sc.terrain.painter.runtime.csproj" />
+  <Project Path="Assembly-CSharp-Editor.csproj" />
 </Solution>
