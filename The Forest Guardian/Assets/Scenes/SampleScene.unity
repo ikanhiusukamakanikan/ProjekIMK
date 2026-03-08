@@ -182,6 +182,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ash 6 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 8185793832496569501, guid: 209b15dd421b315458b25e6457874d89,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -241,7 +246,6 @@ Transform:
   - {fileID: 888099233}
   - {fileID: 1470709530}
   - {fileID: 1833938018}
-  - {fileID: 246249297}
   - {fileID: 250460446}
   - {fileID: 2022197892}
   - {fileID: 35402672}
@@ -273,80 +277,6 @@ MonoBehaviour:
   minFalloff: 120.55
   max: 2000
   maxFalloff: 1
---- !u!1001 &246249296
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 78926883}
-    m_Modifications:
-    - target: {fileID: 5780545108056687457, guid: 43fc8139f33d4ff4c842012a7dc9fed4,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 16.206116
-      objectReference: {fileID: 0}
-    - target: {fileID: 5780545108056687457, guid: 43fc8139f33d4ff4c842012a7dc9fed4,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.6544685
-      objectReference: {fileID: 0}
-    - target: {fileID: 5780545108056687457, guid: 43fc8139f33d4ff4c842012a7dc9fed4,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 25.596527
-      objectReference: {fileID: 0}
-    - target: {fileID: 5780545108056687457, guid: 43fc8139f33d4ff4c842012a7dc9fed4,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5780545108056687457, guid: 43fc8139f33d4ff4c842012a7dc9fed4,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5780545108056687457, guid: 43fc8139f33d4ff4c842012a7dc9fed4,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5780545108056687457, guid: 43fc8139f33d4ff4c842012a7dc9fed4,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5780545108056687457, guid: 43fc8139f33d4ff4c842012a7dc9fed4,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5780545108056687457, guid: 43fc8139f33d4ff4c842012a7dc9fed4,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5780545108056687457, guid: 43fc8139f33d4ff4c842012a7dc9fed4,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8185793832496569501, guid: 43fc8139f33d4ff4c842012a7dc9fed4,
-        type: 3}
-      propertyPath: m_Name
-      value: The Great Ash Tree
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 43fc8139f33d4ff4c842012a7dc9fed4, type: 3}
---- !u!4 &246249297 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5780545108056687457, guid: 43fc8139f33d4ff4c842012a7dc9fed4,
-    type: 3}
-  m_PrefabInstance: {fileID: 246249296}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &250460445
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -410,6 +340,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ash 6
       objectReference: {fileID: 0}
+    - target: {fileID: 8185793832496569501, guid: 209b15dd421b315458b25e6457874d89,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -433,6 +368,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Chestnut 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1991462268964490261, guid: 48c03ef913cc61846a12cb8f6dc7ff8e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2642244604936993471, guid: 48c03ef913cc61846a12cb8f6dc7ff8e,
         type: 3}
@@ -557,6 +497,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Spruce Group 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5503166992987660084, guid: 42f7bc8ca38e61d4d82bcd9aad3f0d73,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -784,6 +729,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Birch 2
       objectReference: {fileID: 0}
+    - target: {fileID: 3416579149820165379, guid: d84fef165871de449b201d71418260b4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -807,6 +757,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Chestnut 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1991462268964490261, guid: c4b1d2c471aaff04898b4c566e7d08f2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2642244604936993471, guid: c4b1d2c471aaff04898b4c566e7d08f2,
         type: 3}
@@ -1059,6 +1014,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ash 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8185793832496569501, guid: 3bcf6e78553a7f54c8bf39912b4124e3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1294,6 +1254,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Birch 4 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3416579149820165379, guid: d545a4c991f4a394fa3eafaddfdc0f83,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1382,6 +1347,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Spruce Group 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5503166992987660084, guid: d4102692591f5344dbdfc15a6f69445c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1510,6 +1480,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Birch 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3416579149820165379, guid: 6fcf7f27da01aba499a0be03812f9f67,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1583,6 +1558,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Birch 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3416579149820165379, guid: f16a6efbbe67d3b44999df7a32c32b27,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1707,6 +1687,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ash 2
       objectReference: {fileID: 0}
+    - target: {fileID: 8185793832496569501, guid: 632cb5ba8e6554c4d895ced6ffb22702,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1781,6 +1766,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Birch 1 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3416579149820165379, guid: 6fcf7f27da01aba499a0be03812f9f67,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1804,6 +1794,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Chestnut 8 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1991462268964490261, guid: c4b1d2c471aaff04898b4c566e7d08f2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2642244604936993471, guid: c4b1d2c471aaff04898b4c566e7d08f2,
         type: 3}
@@ -1928,6 +1923,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Birch 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3416579149820165379, guid: dad071d6bb455bd4ea32d2b486ffeae1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2174,6 +2174,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spruce 2
       objectReference: {fileID: 0}
+    - target: {fileID: 5503166992987660084, guid: 23c628b176d04df4a83eabf82d31b32d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2263,6 +2268,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spruce 2 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5503166992987660084, guid: 23c628b176d04df4a83eabf82d31b32d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2337,6 +2347,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Birch 4
       objectReference: {fileID: 0}
+    - target: {fileID: 3416579149820165379, guid: d545a4c991f4a394fa3eafaddfdc0f83,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2360,6 +2375,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Chestnut 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1991462268964490261, guid: 62877a2894356f7408f0565824d414c2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2642244604936993471, guid: 62877a2894356f7408f0565824d414c2,
         type: 3}
@@ -2506,6 +2526,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Birch 2 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3416579149820165379, guid: d84fef165871de449b201d71418260b4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2615,6 +2640,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Spruce 2 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5503166992987660084, guid: 23c628b176d04df4a83eabf82d31b32d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2747,6 +2777,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spruce 6
       objectReference: {fileID: 0}
+    - target: {fileID: 5503166992987660084, guid: 146e4f73f7d49b74a87492bbe5d2b2c1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2820,6 +2855,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Birch 3 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3416579149820165379, guid: dad071d6bb455bd4ea32d2b486ffeae1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2895,6 +2935,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ash 4
       objectReference: {fileID: 0}
+    - target: {fileID: 8185793832496569501, guid: 35e42d18fc5193b42b806528fbefddeb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2969,6 +3014,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Birch 5
       objectReference: {fileID: 0}
+    - target: {fileID: 3416579149820165379, guid: 80e6f5c1539d4224db7b9fbd16fc3022,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2992,6 +3042,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Chestnut 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1991462268964490261, guid: 733e0985fe2f8674981f217143ec930a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2642244604936993471, guid: 733e0985fe2f8674981f217143ec930a,
         type: 3}
@@ -3261,6 +3316,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ash 8
       objectReference: {fileID: 0}
+    - target: {fileID: 8185793832496569501, guid: 0a3312199122e69409623fdbdbe357d0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3272,6 +3332,74 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2022197891}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &8489986406519164338
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 8421510850606216163, guid: 40830f215bef38242867271a1a97a0e2,
+        type: 3}
+      propertyPath: m_Name
+      value: trees
+      objectReference: {fileID: 0}
+    - target: {fileID: 9193227634820737369, guid: 40830f215bef38242867271a1a97a0e2,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 856.742
+      objectReference: {fileID: 0}
+    - target: {fileID: 9193227634820737369, guid: 40830f215bef38242867271a1a97a0e2,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 65.13088
+      objectReference: {fileID: 0}
+    - target: {fileID: 9193227634820737369, guid: 40830f215bef38242867271a1a97a0e2,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 420.52396
+      objectReference: {fileID: 0}
+    - target: {fileID: 9193227634820737369, guid: 40830f215bef38242867271a1a97a0e2,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9193227634820737369, guid: 40830f215bef38242867271a1a97a0e2,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9193227634820737369, guid: 40830f215bef38242867271a1a97a0e2,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9193227634820737369, guid: 40830f215bef38242867271a1a97a0e2,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9193227634820737369, guid: 40830f215bef38242867271a1a97a0e2,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9193227634820737369, guid: 40830f215bef38242867271a1a97a0e2,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9193227634820737369, guid: 40830f215bef38242867271a1a97a0e2,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 40830f215bef38242867271a1a97a0e2, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -3283,3 +3411,4 @@ SceneRoots:
   - {fileID: 78926883}
   - {fileID: 1252703141}
   - {fileID: 605784457}
+  - {fileID: 8489986406519164338}

@@ -36,7 +36,7 @@ Material:
   stringTagMap: {}
   disabledShaderPasses:
   - MOTIONVECTORS
-  m_LockedProperties: 
+  m_LockedProperties: _NormalStrength _Tiling _WaveDist
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -80,14 +80,15 @@ Material:
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _ScreenSpaceReflections: 1
-    - _Speed: 0.2
+    - _Smoothness: 0.527
+    - _Speed: 0.1
     - _SrcBlend: 5
     - _Surface: 1
-    - _Tiling: 0.2
+    - _Tiling: 0.15
     - _Transparency: 0.95
     - _UseFoam: 1
     - _Use_Foam: 1
-    - _WaveDist: 5
+    - _WaveDist: 4
     - _WaveFrequency: 3
     - _WaveSpeed: 0.1
     - _Wave_Speed: 2
@@ -96,10 +97,10 @@ Material:
     - _ZWrite: 1
     - _ZWriteControl: 1
     m_Colors:
-    - _Color: {r: 0.19215687, g: 0.23921569, b: 0.2627451, a: 1}
-    - _EdgeColor: {r: 0.25098038, g: 0.32941175, b: 0.28627446, a: 1}
+    - _Color: {r: 0.2572089, g: 0.65999997, b: 0.695, a: 1}
+    - _EdgeColor: {r: 0.30588228, g: 0.66699994, b: 0.78, a: 1}
     - _Edge_Color: {r: 0.2507565, g: 0.3301887, b: 0.28799033, a: 1}
-    - _FoamColor: {r: 4, g: 4, b: 4, a: 1}
+    - _FoamColor: {r: 0.7888811, g: 3.1895688, b: 4.431656, a: 1}
     - _Foam_Color: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
