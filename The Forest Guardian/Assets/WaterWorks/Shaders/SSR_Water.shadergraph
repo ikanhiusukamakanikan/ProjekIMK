@@ -5784,7 +5784,7 @@
     "m_ObjectId": "148c77fc57774cb6bde35d572e7d4aa0",
     "m_Title": "Refraction",
     "m_Position": {
-        "x": 4006.000244140625,
+        "x": 4006.0,
         "y": 740.0
     }
 }
@@ -6430,7 +6430,7 @@
     "m_ObjectId": "1adb86ddc5744a70b5ba80426bf6f98b",
     "m_Title": "Combine_Normal_Map",
     "m_Position": {
-        "x": 3559.00048828125,
+        "x": 3559.0,
         "y": 2085.0
     }
 }
@@ -8483,8 +8483,8 @@
     "m_ObjectId": "2fc3bffab2c24592bbefc852cc4177e2",
     "m_Title": "SSR",
     "m_Position": {
-        "x": 2197.000244140625,
-        "y": -18.0001220703125
+        "x": 2197.0,
+        "y": -18.0
     }
 }
 
@@ -9958,7 +9958,7 @@
     "m_ObjectId": "3d8cc44f846c4f8ab7fafcb6489d0503",
     "m_Title": "Water_Colour",
     "m_Position": {
-        "x": 2003.00048828125,
+        "x": 2003.0,
         "y": 730.0
     }
 }
@@ -10580,8 +10580,8 @@
     "m_ObjectId": "42eb3c04b5114e9da29712c32e4fde15",
     "m_Title": "Caustics",
     "m_Position": {
-        "x": 3667.00048828125,
-        "y": 234.9998779296875
+        "x": 3667.0,
+        "y": 235.0
     }
 }
 
@@ -11853,7 +11853,7 @@
     "m_ObjectId": "51bed6b84beb4ea799499e5d19adfdb7",
     "m_Title": "Triplanar_Blending",
     "m_Position": {
-        "x": -340.99951171875,
+        "x": -341.0,
         "y": 1472.0
     }
 }
@@ -12697,7 +12697,7 @@
     "m_ObjectId": "586314affd4c4d78a8ef77dc0c4b9a7d",
     "m_Title": "Combine_Foam",
     "m_Position": {
-        "x": 2745.000244140625,
+        "x": 2745.0,
         "y": 1055.0
     }
 }
@@ -15422,7 +15422,7 @@
     "m_ObjectId": "7882ddf0bf3047d6b60174f2316a4e4b",
     "m_Title": "Foam_Noise",
     "m_Position": {
-        "x": 1312.00048828125,
+        "x": 1312.0,
         "y": 2483.0
     }
 }
@@ -16864,8 +16864,8 @@
     "m_ObjectId": "8c3ca464879e4fa294bb3f12dc84424d",
     "m_Title": "Toggle_Reflections",
     "m_Position": {
-        "x": 3098.000244140625,
-        "y": 716.0000610351563
+        "x": 3098.0,
+        "y": 716.0
     }
 }
 
@@ -19308,7 +19308,7 @@
     "m_ObjectId": "aa39726ea7a24e078d58d320f3c0f388",
     "m_Title": "Flowing_Wave_Noise",
     "m_Position": {
-        "x": -2067.00048828125,
+        "x": -2067.0,
         "y": 1188.0
     }
 }
@@ -20942,7 +20942,7 @@
     "m_ObjectId": "be3ff3df49fe4c189b2df332bee688da",
     "m_Title": "Transparency",
     "m_Position": {
-        "x": 4298.00048828125,
+        "x": 4298.0,
         "y": 1152.0
     }
 }
@@ -21904,7 +21904,7 @@
     "m_ObjectId": "cacb2c5093f34787adf6977999f4330b",
     "m_Title": "Edge_Fading",
     "m_Position": {
-        "x": 4312.00048828125,
+        "x": 4312.0,
         "y": 1756.0
     }
 }
@@ -26179,7 +26179,7 @@
     "m_ObjectId": "f6e59dc286744d799e4922f028ea126d",
     "m_Title": "Vertex_Displacement",
     "m_Position": {
-        "x": 3895.000244140625,
+        "x": 3895.0,
         "y": -247.0
     }
 }
