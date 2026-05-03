@@ -1,8 +1,8 @@
 ﻿<Solution>
   <Project Path="Unity.XR.Interaction.Toolkit.Samples.InteractionSimulator.csproj" />
+  <Project Path="Assembly-CSharp.csproj" />
   <Project Path="sc.terrain.painter.editor.csproj" />
   <Project Path="Unity.XR.Interaction.Toolkit.Samples.StarterAssets.csproj" />
-  <Project Path="Assembly-CSharp.csproj" />
   <Project Path="sc.terrain.painter.runtime.csproj" />
   <Project Path="Unity.XR.Interaction.Toolkit.Samples.StarterAssets.Editor.csproj" />
   <Project Path="Assembly-CSharp-Editor.csproj" />
