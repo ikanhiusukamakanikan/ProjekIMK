@@ -150,7 +150,7 @@ Material:
     - _DaySkyColor: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _NightSkyColor: {r: 0.066037714, g: 0.066037714, b: 0.066037714, a: 1}
-    - _SkyboxColor: {r: 0.79294235, g: 0.9064764, b: 0.9716981, a: 1}
+    - _SkyboxColor: {r: 1, g: 1, b: 1, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _SunColor: {r: 1, g: 1, b: 1, a: 1}
     - _SunGlowColor: {r: 1, g: 1, b: 1, a: 1}
