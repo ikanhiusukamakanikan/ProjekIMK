@@ -75,7 +75,7 @@ public class FireNode : MonoBehaviour
     // ========================
     public void Ignite()
     {
-        if (state == FireState.Burning) return;
+        if (state == FireState.Burnt) return; 
 
         state = FireState.Burning;
 
@@ -176,13 +176,13 @@ public class FireNode : MonoBehaviour
 
         UpdateVisual();
 
-        if (currentHealth <= 0)
+        if (currentHealth <= 20)
         {
             Extinguish();
         }
     }
 
-    void OnParticleCollision(GameObject other)
+    void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Water"))
         {
@@ -220,7 +220,7 @@ public class FireNode : MonoBehaviour
         if (fireParticle != null)
             fireParticle.Stop();
 
-        Destroy(gameObject, 2f);
+        Destroy(gameObject);
     }
 
     // ========================

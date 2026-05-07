@@ -106,9 +106,19 @@ public class TerrainBurner : MonoBehaviour
         {
             for (int xIdx = 0; xIdx < size; xIdx++)
             {
-                normal[zIdx, xIdx] = 0;
-                burned[zIdx, xIdx] = 500;
-                applied++;
+                // hanya burn kalau ada grass normal
+                if (normal[zIdx, xIdx] > 0)
+                {
+                    int amount = normal[zIdx, xIdx];
+
+                    // hapus dari normal
+                    normal[zIdx, xIdx] = 0;
+
+                    // pindah ke burned
+                    burned[zIdx, xIdx] = amount;
+
+                    applied++;
+                }
             }
         }
 

@@ -754,6 +754,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: tunas_pickup
       objectReference: {fileID: 0}
+    - target: {fileID: 773007194450748541, guid: 0a3d60fad526eb44585878f5153caa3c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1039293657680179993, guid: 0a3d60fad526eb44585878f5153caa3c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2234,6 +2239,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: VR Character IK
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ea434de1648178d409fdab30ff8edf16,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: ea434de1648178d409fdab30ff8edf16,
         type: 3}
       propertyPath: m_Controller
@@ -2344,8 +2354,8 @@ MonoBehaviour:
   m_Camera: {fileID: 290872415}
   m_OriginBaseGameObject: {fileID: 777480707}
   m_CameraFloorOffsetObject: {fileID: 1700187478}
-  m_RequestedTrackingOriginMode: 2
-  m_CameraYOffset: 1.8
+  m_RequestedTrackingOriginMode: 1
+  m_CameraYOffset: 1.7
 --- !u!143 &777480710
 CharacterController:
   m_ObjectHideFlags: 0
@@ -3463,6 +3473,8 @@ GameObject:
   - component: {fileID: 1196906231}
   - component: {fileID: 1196906233}
   - component: {fileID: 1196906232}
+  - component: {fileID: 1196906235}
+  - component: {fileID: 1196906234}
   m_Layer: 0
   m_Name: WaterStream
   m_TagString: Water
@@ -8289,6 +8301,56 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!54 &1196906234
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1196906230}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!136 &1196906235
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1196906230}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.1
+  m_Height: 1.91
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: 0.94}
 --- !u!114 &1209389357
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9024,7 +9086,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   firePrefab: {fileID: 5979877801915983335, guid: 6d0a57ffe11f798418da712029ff0ee2,
     type: 3}
-  minHeight: 10
+  minHeight: 12
   maxHeight: 15
   spawnCount: 3
 --- !u!4 &1516961563
@@ -9155,6 +9217,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Kapak
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dee36b2fcde99464a8974b00f9eadf65,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -14551,7 +14618,7 @@ GameObject:
   - component: {fileID: 6820285951273182208}
   - component: {fileID: 6820285951273182207}
   - component: {fileID: 6820285951273182206}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: VR Character IK (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15643,6 +15710,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: firehose
+      objectReference: {fileID: 0}
+    - target: {fileID: 2463722042992931290, guid: e6bb78a626b6ea648af18a26205e1551,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2701208824825946975, guid: e6bb78a626b6ea648af18a26205e1551,
+        type: 3}
+      propertyPath: m_MovementType
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2701208824825946975, guid: e6bb78a626b6ea648af18a26205e1551,
         type: 3}
@@ -16795,6 +16872,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: shovel
+      objectReference: {fileID: 0}
+    - target: {fileID: 71148106470069323, guid: decdba6e566964a43b02c50ff2176ff6,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 3527383891480709519, guid: decdba6e566964a43b02c50ff2176ff6,
         type: 3}
