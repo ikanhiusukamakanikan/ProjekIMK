@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Terrain")]
     public Terrain terrain;
+    public int seed = 42;
 
     void Awake()
     {
