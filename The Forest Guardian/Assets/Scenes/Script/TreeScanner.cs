@@ -86,7 +86,7 @@ public class TreeScanner : MonoBehaviour
     void ScanTree()
     {
         Vector3 origin = ScannerLaser.transform.position;
-        Vector3 direction = ScannerLaser.transform.forward;
+        Vector3 direction = ScannerLaser.transform.right;
 
         RaycastHit hit;
 
