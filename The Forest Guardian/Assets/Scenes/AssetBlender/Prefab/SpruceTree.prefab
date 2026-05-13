@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3392340378691313637}
   - component: {fileID: 7681568540798313318}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SpruceTree
-  m_TagString: Untagged
+  m_TagString: Tree
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45,7 +45,7 @@ LODGroup:
   serializedVersion: 2
   m_LocalReferencePoint: {x: 6.186492, y: 10.917319, z: -32.545628}
   m_Size: 22.66073
-  m_FadeMode: 2
+  m_FadeMode: 1
   m_AnimateCrossFading: 1
   m_LastLODIsBillboard: 0
   m_LODs:
@@ -73,7 +73,6 @@ GameObject:
   - component: {fileID: 5659872104115256593}
   - component: {fileID: 5042050605443456443}
   - component: {fileID: 6640511251332722028}
-  - component: {fileID: 6116789309820567962}
   m_Layer: 0
   m_Name: pohonSpruceLOD2
   m_TagString: Untagged
@@ -153,28 +152,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &6116789309820567962
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8010391751215432520}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8985469798178445289
 GameObject:
   m_ObjectHideFlags: 0
@@ -435,7 +412,11 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 4541131617811902837}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 031bfeadbb325e948be5c2e7ebe4d93b,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3359589675216236936}
   m_SourcePrefab: {fileID: 100100000, guid: 031bfeadbb325e948be5c2e7ebe4d93b, type: 3}
 --- !u!23 &7847992366693867739 stripped
 MeshRenderer:
@@ -443,6 +424,29 @@ MeshRenderer:
     type: 3}
   m_PrefabInstance: {fileID: 8874412180118797407}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8640533060924489998 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 031bfeadbb325e948be5c2e7ebe4d93b,
+    type: 3}
+  m_PrefabInstance: {fileID: 8874412180118797407}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3359589675216236936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8640533060924489998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82e042aafe65df548a1df4939674116d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TreeChop
+  maxHits: 5
+  brokenTreePrefab: {fileID: 5047153575531141938, guid: 352749f4aa8096e4dafd0a390e9ab7ee,
+    type: 3}
+  fallForce: 7
+  upwardForce: 2
 --- !u!4 &8980889756327746484 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 031bfeadbb325e948be5c2e7ebe4d93b,

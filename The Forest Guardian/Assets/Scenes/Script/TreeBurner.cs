@@ -1,14 +1,10 @@
 using UnityEngine;
-using System.Collections.Generic;
 
 public class TreeBurner : MonoBehaviour
 {
     public static TreeBurner Instance;
 
-    private Terrain terrain;
     public GameObject burnedTreePrefab;
-
-    public float burnRadius = 3f;
 
     void Awake()
     {
@@ -16,32 +12,25 @@ public class TreeBurner : MonoBehaviour
         else Destroy(gameObject);
     }
 
-    void Start()
+    public void BurnTree(GameObject tree)
     {
-        terrain = GameManager.Instance.terrain;
-    }
+        if (!tree.CompareTag("Tree"))
+            return;
 
-    public void BurnTrees(Vector3 position)
-    {
-        TerrainData data = terrain.terrainData;
+        Vector3 pos = tree.transform.position;
+        Quaternion rot = tree.transform.rotation;
+        Vector3 scale = tree.transform.localScale;
 
-        var trees = data.treeInstances;
-        List<TreeInstance> newTrees = new List<TreeInstance>();
+        GameObject burned = Instantiate(
+            burnedTreePrefab,
+            pos,
+            rot
+        );
 
-        foreach (var tree in trees)
-        {
-            Vector3 worldPos = Vector3.Scale(tree.position, data.size) + terrain.transform.position;
+        burned.transform.localScale = scale;
 
-            if (Vector3.Distance(worldPos, position) < burnRadius)
-            {
-                Instantiate(burnedTreePrefab, worldPos, Quaternion.identity);
-            }
-            else
-            {
-                newTrees.Add(tree);
-            }
-        }
+        TreeManager.Instance.RemoveTree(tree);
 
-        data.treeInstances = newTrees.ToArray();
+        Destroy(tree);
     }
 }

@@ -88,14 +88,53 @@ public class FireNode : MonoBehaviour
         if (TerrainBurner.Instance != null)
             TerrainBurner.Instance.BurnAtPosition(transform.position);
 
-        // 🌳 burn tree
-        if (TreeBurner.Instance != null)
-            TreeBurner.Instance.BurnTrees(transform.position);
+        BurnNearbyTrees();
 
         if (generation < maxGeneration)
         {
             Invoke(nameof(SpreadFire), GetDelay());
         }
+    }
+
+    void BurnNearbyTrees()
+    {
+        var trees = TreeManager.Instance.allTrees;
+
+        float burnRadius = 10f;
+        float radiusSqr = burnRadius * burnRadius;
+
+        Vector3 firePos = transform.position;
+
+        Debug.Log($"[FireNode] Checking {trees.Count} trees near fire.");
+
+        int burnedCount = 0;
+
+        for (int i = trees.Count - 1; i >= 0; i--)
+        {
+            GameObject tree = trees[i];
+
+            if (tree == null)
+            {
+                Debug.Log($"[FireNode] Tree index {i} is NULL");
+                continue;
+            }
+
+            Vector3 diff = tree.transform.position - firePos;
+            float distSqr = diff.sqrMagnitude;
+
+            Debug.Log($"[FireNode] Checking tree: {tree.name} | DistSqr: {distSqr}");
+
+            if (distSqr <= radiusSqr)
+            {
+                Debug.Log($"[FireNode] BURNING TREE: {tree.name}");
+
+                TreeBurner.Instance.BurnTree(tree);
+
+                burnedCount++;
+            }
+        }
+
+        Debug.Log($"[FireNode] Total Burned Trees: {burnedCount}");
     }
 
     // ========================

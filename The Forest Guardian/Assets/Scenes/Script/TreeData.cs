@@ -8,7 +8,7 @@ public class TreeData : MonoBehaviour
     [Range(0, 100)]
     public int badTreeChance = 50;
 
-    void Awake()
+    void Start()
     {
         GenerateTreeType();
     }

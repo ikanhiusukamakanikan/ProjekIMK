@@ -16,7 +16,7 @@ TagManager:
   - UI
   - Terrain
   - Fire
-  - RenderOnTop
+  - 
   - Player
   - Tree
   - 
@@ -39,7 +39,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - RenderOnTop
   m_SortingLayers:
   - name: Default
     uniqueID: 0
