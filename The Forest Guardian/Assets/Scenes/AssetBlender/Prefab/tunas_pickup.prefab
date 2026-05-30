@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 48869037500088335}
   - component: {fileID: 5796412022911109547}
   - component: {fileID: 9022477009571498871}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: tunas_pickup
   m_TagString: Tunas
   m_Icon: {fileID: 0}
@@ -225,7 +225,7 @@ GameObject:
   - component: {fileID: 2513752142696760383}
   - component: {fileID: 1179684349015853022}
   - component: {fileID: 9032780999775138142}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: Circle.006
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -315,7 +315,7 @@ GameObject:
   - component: {fileID: 5600914244377955708}
   - component: {fileID: 3462024716595647511}
   - component: {fileID: 208487863788664470}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: Plane.003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
