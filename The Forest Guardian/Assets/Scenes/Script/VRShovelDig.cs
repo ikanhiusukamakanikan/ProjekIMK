@@ -1,7 +1,9 @@
+using System;
 using UnityEngine;
 
 public class VRShovelDig : MonoBehaviour
 {
+    public static event Action<Vector3> Dug;
 
     [Header("Dig Settings")]
     public float digRadius = 2f;
@@ -64,6 +66,7 @@ public class VRShovelDig : MonoBehaviour
 
                 RemoveGrass(hitPoint);
                 SpawnDirt(hitPoint);
+                Dug?.Invoke(hitPoint);
 
                 lastDigTime = Time.time;
             }
@@ -75,9 +78,9 @@ public class VRShovelDig : MonoBehaviour
         for (int i = 0; i < spawnCount; i++)
         {
             Vector3 offset = new Vector3(
-                Random.Range(-spawnSpread, spawnSpread),
+                UnityEngine.Random.Range(-spawnSpread, spawnSpread),
                 0,
-                Random.Range(-spawnSpread, spawnSpread)
+                UnityEngine.Random.Range(-spawnSpread, spawnSpread)
             );
 
             Vector3 spawnPos = center + offset;
@@ -86,15 +89,15 @@ public class VRShovelDig : MonoBehaviour
 
             GameObject dirt = Instantiate(dirtPrefab, spawnPos, dirtPrefab.transform.rotation);
 
-            dirt.transform.rotation = Quaternion.Euler(-90, Random.Range(0, 360), 0);
+            dirt.transform.rotation = Quaternion.Euler(-90, UnityEngine.Random.Range(0, 360), 0);
 
-            float scale = Random.Range(0.8f, 1.2f);
+            float scale = UnityEngine.Random.Range(0.8f, 1.2f);
             dirt.transform.localScale *= scale;
 
             Rigidbody rb = dirt.GetComponent<Rigidbody>();
             if (rb != null)
             {
-                rb.AddForce(Vector3.up * Random.Range(dirtForce * 0.5f, dirtForce), ForceMode.Impulse);
+                rb.AddForce(Vector3.up * UnityEngine.Random.Range(dirtForce * 0.5f, dirtForce), ForceMode.Impulse);
             }
 
             Destroy(dirt, destroyAfter);

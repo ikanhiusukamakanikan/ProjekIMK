@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,6 +18,10 @@ using UnityEngine.InputSystem;
 
 public class ItemSelectionUI : MonoBehaviour
 {
+    public static event Action<ItemSelectionUI> MenuOpened;
+    public static event Action<ItemSelectionUI> MenuClosed;
+    public static event Action<ItemSelectionUI, GameObject> ItemSpawned;
+
     [System.Serializable]
     public class ItemOption
     {
@@ -191,6 +196,7 @@ public class ItemSelectionUI : MonoBehaviour
         }
 
         PlayMenuVisibilityAnimation(visible);
+        NotifyVisibilityChanged(visible);
 
         if (visible)
         {
@@ -432,6 +438,20 @@ public class ItemSelectionUI : MonoBehaviour
         if (disableGravityUntilGrab)
         {
             DisableGravityUntilGrab(spawnedItem);
+        }
+
+        ItemSpawned?.Invoke(this, spawnedItem);
+    }
+
+    private void NotifyVisibilityChanged(bool visible)
+    {
+        if (visible)
+        {
+            MenuOpened?.Invoke(this);
+        }
+        else
+        {
+            MenuClosed?.Invoke(this);
         }
     }
 

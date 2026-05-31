@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.UI;
@@ -5,6 +6,10 @@ using System.Collections;
 
 public class TreeScanner : MonoBehaviour
 {
+    public static event Action<TreeScanner> ScannerGrabbed;
+    public static event Action<TreeScanner> ScannerReleased;
+    public static event Action<TreeScanner, TreeData, bool> TreeScanned;
+
     [Header("XR")]
     public UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable grabInteractable;
 
@@ -51,6 +56,7 @@ public class TreeScanner : MonoBehaviour
         isHeld = true;
 
         ScannerLaser.SetActive(true);
+        ScannerGrabbed?.Invoke(this);
 
         scanRoutine = StartCoroutine(ScanRoutine());
     }
@@ -62,6 +68,7 @@ public class TreeScanner : MonoBehaviour
         isHeld = false;
 
         ScannerLaser.SetActive(false);
+        ScannerReleased?.Invoke(this);
 
         if (scanRoutine != null)
         {
@@ -145,14 +152,22 @@ public class TreeScanner : MonoBehaviour
                     {
                         Debug.Log("[TreeScanner] BAD TREE DETECTED");
 
-                        resultImage.sprite = badSprite;
+                        if (resultImage != null)
+                        {
+                            resultImage.sprite = badSprite;
+                        }
                     }
                     else
                     {
                         Debug.Log("[TreeScanner] GOOD TREE DETECTED");
 
-                        resultImage.sprite = goodSprite;
+                        if (resultImage != null)
+                        {
+                            resultImage.sprite = goodSprite;
+                        }
                     }
+
+                    TreeScanned?.Invoke(this, treeData, treeData.isBadTree);
                 }
                 else
                 {

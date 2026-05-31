@@ -1,8 +1,12 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class TanahGrowTree : MonoBehaviour
 {
+    public static event Action<TanahGrowTree, GameObject> TreeGrown;
+    public static event Action<TanahGrowTree> PlantingBlockedByBurnRule;
+
     [Header("Setup")]
     public GameObject treePrefab;
 
@@ -16,6 +20,11 @@ public class TanahGrowTree : MonoBehaviour
     [Header("Scale")]
     public Vector3 finalScale = Vector3.one;
 
+    [Header("Burned Area Planting")]
+    public bool preferBurnedAreaWhenAvailable = true;
+    public float burnedAreaCheckRadius = 2f;
+    public bool clearBurnedAreaAfterGrow = true;
+
     private bool alreadyTriggered = false;
 
     private void OnTriggerEnter(Collider other)
@@ -24,6 +33,12 @@ public class TanahGrowTree : MonoBehaviour
 
         if (other.CompareTag(tunasTag))
         {
+            if (!CanPlantHere())
+            {
+                PlantingBlockedByBurnRule?.Invoke(this);
+                return;
+            }
+
             alreadyTriggered = true;
             Destroy(other.gameObject);
             StartCoroutine(GrowSequence());
@@ -59,7 +74,34 @@ public class TanahGrowTree : MonoBehaviour
         // Pastikan scale final
         tree.transform.localScale = finalScale;
 
+        if (TreeManager.Instance != null && tree.CompareTag("Tree") && !TreeManager.Instance.allTrees.Contains(tree))
+        {
+            TreeManager.Instance.allTrees.Add(tree);
+        }
+
+        if (clearBurnedAreaAfterGrow && TerrainBurner.Instance != null)
+        {
+            TerrainBurner.Instance.ClearBurnedAtPosition(transform.position, burnedAreaCheckRadius);
+        }
+
+        TreeGrown?.Invoke(this, tree);
+
         // Hapus tanah
         Destroy(gameObject);
+    }
+
+    private bool CanPlantHere()
+    {
+        if (!preferBurnedAreaWhenAvailable || TerrainBurner.Instance == null)
+        {
+            return true;
+        }
+
+        if (!TerrainBurner.Instance.HasBurnedArea)
+        {
+            return true;
+        }
+
+        return TerrainBurner.Instance.IsPositionInBurnedArea(transform.position, burnedAreaCheckRadius);
     }
 }

@@ -1,8 +1,10 @@
+using System;
 using UnityEngine;
 
 public class FireSpawner : MonoBehaviour
 {
     public static FireSpawner Instance;
+    public static event Action<GameObject, FireNode> FireSpawned;
 
     [Header("Setup")]
     public GameObject firePrefab;
@@ -34,8 +36,21 @@ public class FireSpawner : MonoBehaviour
         }
     }
 
-    public void SpawnFire()
+    public int SpawnFire()
     {
+        if (terrain == null && GameManager.Instance != null)
+        {
+            terrain = GameManager.Instance.terrain;
+        }
+
+        if (terrain == null || firePrefab == null)
+        {
+            Debug.LogWarning($"[{nameof(FireSpawner)}] Terrain atau firePrefab belum diisi.", this);
+            return 0;
+        }
+
+        int spawnedCount = 0;
+
         for (int i = 0; i < spawnCount; i++)
         {
             Vector3 pos = GetRandomPointOnTerrain();
@@ -44,8 +59,19 @@ public class FireSpawner : MonoBehaviour
             {
                 GameObject fire = Instantiate(firePrefab, pos, Quaternion.identity);
                 fire.transform.rotation = Quaternion.Euler(-90, 0, 0);
+
+                FireNode node = fire.GetComponent<FireNode>();
+                if (node != null)
+                {
+                    node.Ignite();
+                }
+
+                FireSpawned?.Invoke(fire, node);
+                spawnedCount++;
             }
         }
+
+        return spawnedCount;
     }
 
     public bool IsValidHeight(float height)
@@ -57,8 +83,8 @@ public class FireSpawner : MonoBehaviour
     {
         Vector3 terrainPos = terrain.transform.position;
 
-        float x = Random.Range(0, terrain.terrainData.size.x);
-        float z = Random.Range(0, terrain.terrainData.size.z);
+        float x = UnityEngine.Random.Range(0, terrain.terrainData.size.x);
+        float z = UnityEngine.Random.Range(0, terrain.terrainData.size.z);
 
         float y = terrain.SampleHeight(new Vector3(x, 0, z));
 
