@@ -15,7 +15,10 @@ public class MainMenuManager : MonoBehaviour
     {
         Play,
         Settings,
-        Exit
+        Exit,
+        StoryMode,
+        SandboxMode,
+        ReturnToMainMenu
     }
 
     [System.Serializable]
@@ -29,6 +32,20 @@ public class MainMenuManager : MonoBehaviour
     public MenuButton playButton;
     public MenuButton settingsButton;
     public MenuButton exitButton;
+
+    [Header("Stage Buttons")]
+    public MenuButton storyModeButton;
+    public MenuButton sandboxModeButton;
+    public MenuButton returnToMainMenuButton;
+
+    [Header("Menu Panels")]
+    public GameObject mainMenuPanel;
+    public CanvasGroup mainMenuCanvasGroup;
+    public RectTransform mainMenuRect;
+    public GameObject stagePanel;
+    public CanvasGroup stageCanvasGroup;
+    public RectTransform stageRect;
+    public bool hideStageOnStart = true;
 
     [Header("Scene")]
     public string stageSceneName = "StageScene";
@@ -58,21 +75,40 @@ public class MainMenuManager : MonoBehaviour
     public float settingsHiddenScale = 0.94f;
     public Ease settingsEase = Ease.OutCubic;
 
+    [Header("Menu Transition Animation")]
+    public float menuTransitionDuration = 0.32f;
+    public float menuTransitionOffset = 140f;
+    public Ease menuTransitionEase = Ease.OutCubic;
+
     private readonly Dictionary<GameObject, ButtonRuntime> runtimes = new();
     private Tween settingsTween;
+    private Sequence menuTransitionTween;
     private Vector3 settingsVisibleScale = Vector3.one;
+    private Vector2 mainMenuVisiblePosition;
+    private Vector2 stageVisiblePosition;
     private bool settingsOpen;
+    private bool stageOpen;
+    private bool menuTransitionPlaying;
 
     void Awake()
     {
         RegisterButton(playButton, MenuAction.Play);
         RegisterButton(settingsButton, MenuAction.Settings);
         RegisterButton(exitButton, MenuAction.Exit);
+        RegisterButton(storyModeButton, MenuAction.StoryMode);
+        RegisterButton(sandboxModeButton, MenuAction.SandboxMode);
+        RegisterButton(returnToMainMenuButton, MenuAction.ReturnToMainMenu);
+        CacheMenuPanels();
         CacheSettingsPanel();
     }
 
     void Start()
     {
+        if (hideStageOnStart)
+        {
+            SetStagePanelImmediate(false);
+        }
+
         if (hideSettingsOnStart)
         {
             SetSettingsPanelImmediate(false);
@@ -82,6 +118,7 @@ public class MainMenuManager : MonoBehaviour
     void OnDestroy()
     {
         settingsTween?.Kill();
+        menuTransitionTween?.Kill();
 
         foreach (ButtonRuntime runtime in runtimes.Values)
         {
@@ -91,12 +128,43 @@ public class MainMenuManager : MonoBehaviour
 
     public void Play()
     {
+        OpenStageMenu();
+    }
+
+    public void StartStoryMode()
+    {
+        LoadStageScene(QuestManager.QuestMode.Story);
+    }
+
+    public void StartSandboxMode()
+    {
+        LoadStageScene(QuestManager.QuestMode.Sandbox);
+    }
+
+    public void OpenStageMenu()
+    {
+        if (settingsOpen)
+        {
+            SetSettingsPanel(false);
+        }
+
+        SetStagePanel(true);
+    }
+
+    public void ReturnToMainMenu()
+    {
+        SetStagePanel(false);
+    }
+
+    private void LoadStageScene(QuestManager.QuestMode selectedMode)
+    {
         if (string.IsNullOrWhiteSpace(stageSceneName))
         {
             Debug.LogWarning($"[{nameof(MainMenuManager)}] Stage Scene Name belum diisi.", this);
             return;
         }
 
+        QuestManager.SaveSelectedMode(selectedMode);
         SceneManager.LoadScene(stageSceneName);
     }
 
@@ -195,6 +263,15 @@ public class MainMenuManager : MonoBehaviour
             case MenuAction.Exit:
                 ExitGame();
                 break;
+            case MenuAction.StoryMode:
+                StartStoryMode();
+                break;
+            case MenuAction.SandboxMode:
+                StartSandboxMode();
+                break;
+            case MenuAction.ReturnToMainMenu:
+                ReturnToMainMenu();
+                break;
         }
     }
 
@@ -221,9 +298,177 @@ public class MainMenuManager : MonoBehaviour
                 return settingsButton;
             case MenuAction.Exit:
                 return exitButton;
+            case MenuAction.StoryMode:
+                return storyModeButton;
+            case MenuAction.SandboxMode:
+                return sandboxModeButton;
+            case MenuAction.ReturnToMainMenu:
+                return returnToMainMenuButton;
             default:
                 return null;
         }
+    }
+
+    private void CacheMenuPanels()
+    {
+        if (mainMenuPanel != null)
+        {
+            if (mainMenuCanvasGroup == null)
+            {
+                mainMenuCanvasGroup = mainMenuPanel.GetComponent<CanvasGroup>();
+            }
+
+            if (mainMenuCanvasGroup == null)
+            {
+                mainMenuCanvasGroup = mainMenuPanel.AddComponent<CanvasGroup>();
+            }
+
+            if (mainMenuRect == null)
+            {
+                mainMenuRect = mainMenuPanel.GetComponent<RectTransform>();
+            }
+
+            if (mainMenuRect != null)
+            {
+                mainMenuVisiblePosition = mainMenuRect.anchoredPosition;
+            }
+        }
+
+        if (stagePanel != null)
+        {
+            if (stageCanvasGroup == null)
+            {
+                stageCanvasGroup = stagePanel.GetComponent<CanvasGroup>();
+            }
+
+            if (stageCanvasGroup == null)
+            {
+                stageCanvasGroup = stagePanel.AddComponent<CanvasGroup>();
+            }
+
+            if (stageRect == null)
+            {
+                stageRect = stagePanel.GetComponent<RectTransform>();
+            }
+
+            if (stageRect != null)
+            {
+                stageVisiblePosition = stageRect.anchoredPosition;
+            }
+        }
+    }
+
+    private void SetStagePanel(bool open)
+    {
+        CacheMenuPanels();
+
+        if (mainMenuPanel == null || stagePanel == null || mainMenuCanvasGroup == null || stageCanvasGroup == null)
+        {
+            Debug.LogWarning($"[{nameof(MainMenuManager)}] Main Menu Panel dan Stage Panel harus diisi untuk transisi stage UI.", this);
+            return;
+        }
+
+        if (menuTransitionPlaying || stageOpen == open)
+        {
+            return;
+        }
+
+        stageOpen = open;
+        menuTransitionPlaying = true;
+        menuTransitionTween?.Kill();
+
+        GameObject incomingPanel = open ? stagePanel : mainMenuPanel;
+        CanvasGroup incomingGroup = open ? stageCanvasGroup : mainMenuCanvasGroup;
+        RectTransform incomingRect = open ? stageRect : mainMenuRect;
+        Vector2 incomingVisiblePosition = open ? stageVisiblePosition : mainMenuVisiblePosition;
+        Vector2 incomingHiddenPosition = incomingVisiblePosition - Vector2.up * menuTransitionOffset;
+
+        GameObject outgoingPanel = open ? mainMenuPanel : stagePanel;
+        CanvasGroup outgoingGroup = open ? mainMenuCanvasGroup : stageCanvasGroup;
+        RectTransform outgoingRect = open ? mainMenuRect : stageRect;
+        Vector2 outgoingVisiblePosition = open ? mainMenuVisiblePosition : stageVisiblePosition;
+        Vector2 outgoingHiddenPosition = outgoingVisiblePosition + Vector2.up * menuTransitionOffset;
+
+        incomingPanel.SetActive(true);
+        outgoingPanel.SetActive(true);
+        incomingGroup.alpha = 0f;
+        incomingGroup.interactable = false;
+        incomingGroup.blocksRaycasts = false;
+        outgoingGroup.interactable = false;
+        outgoingGroup.blocksRaycasts = false;
+        SetAnchoredPosition(incomingRect, incomingHiddenPosition);
+        SetAnchoredPosition(outgoingRect, outgoingVisiblePosition);
+
+        menuTransitionTween = DOTween.Sequence()
+            .SetUpdate(true)
+            .SetTarget(this)
+            .Append(incomingGroup.DOFade(1f, Mathf.Max(0.01f, menuTransitionDuration)))
+            .Join(outgoingGroup.DOFade(0f, Mathf.Max(0.01f, menuTransitionDuration)))
+            .Join(GetAnchoredPositionTween(incomingRect, incomingVisiblePosition, menuTransitionDuration))
+            .Join(GetAnchoredPositionTween(outgoingRect, outgoingHiddenPosition, menuTransitionDuration))
+            .SetEase(menuTransitionEase)
+            .OnComplete(() =>
+            {
+                incomingGroup.interactable = true;
+                incomingGroup.blocksRaycasts = true;
+                outgoingPanel.SetActive(false);
+                SetAnchoredPosition(outgoingRect, outgoingVisiblePosition);
+                menuTransitionPlaying = false;
+                menuTransitionTween = null;
+            });
+    }
+
+    private void SetStagePanelImmediate(bool open)
+    {
+        CacheMenuPanels();
+
+        stageOpen = open;
+        menuTransitionTween?.Kill();
+        menuTransitionTween = null;
+        menuTransitionPlaying = false;
+
+        SetPanelImmediate(mainMenuPanel, mainMenuCanvasGroup, mainMenuRect, mainMenuVisiblePosition, !open);
+        SetPanelImmediate(stagePanel, stageCanvasGroup, stageRect, stageVisiblePosition, open);
+    }
+
+    private void SetPanelImmediate(
+        GameObject panel,
+        CanvasGroup canvasGroup,
+        RectTransform rectTransform,
+        Vector2 visiblePosition,
+        bool visible
+    )
+    {
+        if (panel == null || canvasGroup == null)
+        {
+            return;
+        }
+
+        panel.SetActive(visible);
+        canvasGroup.alpha = visible ? 1f : 0f;
+        canvasGroup.interactable = visible;
+        canvasGroup.blocksRaycasts = visible;
+        SetAnchoredPosition(rectTransform, visiblePosition);
+    }
+
+    private Tween GetAnchoredPositionTween(RectTransform rectTransform, Vector2 targetPosition, float duration)
+    {
+        if (rectTransform == null)
+        {
+            return DOTween.To(() => 0f, _ => { }, 1f, Mathf.Max(0.01f, duration));
+        }
+
+        return rectTransform.DOAnchorPos(targetPosition, Mathf.Max(0.01f, duration));
+    }
+
+    private void SetAnchoredPosition(RectTransform rectTransform, Vector2 position)
+    {
+        if (rectTransform == null)
+        {
+            return;
+        }
+
+        rectTransform.anchoredPosition = position;
     }
 
     private void CacheSettingsPanel()

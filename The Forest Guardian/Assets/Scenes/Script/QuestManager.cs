@@ -8,6 +8,7 @@ using UnityEngine.XR;
 public class QuestManager : MonoBehaviour
 {
     public static QuestManager Instance { get; private set; }
+    public const string SelectedModePlayerPrefsKey = "ForestGuardian.SelectedQuestMode";
 
     public enum QuestMode
     {
@@ -89,6 +90,7 @@ public class QuestManager : MonoBehaviour
 
     [Header("Mode")]
     public QuestMode mode = QuestMode.Story;
+    public bool useSelectedModeFromMainMenu = true;
     public bool startStoryOnStart = true;
     public bool sandboxHotkeysEnabled = true;
 
@@ -200,10 +202,15 @@ public class QuestManager : MonoBehaviour
     void Start()
     {
         ResolveReferences();
+        ApplySelectedModeFromMainMenu();
 
         if (mode == QuestMode.Story && startStoryOnStart)
         {
             StartStoryMode();
+        }
+        else if (mode == QuestMode.Sandbox)
+        {
+            StartSandboxMode();
         }
     }
 
@@ -282,6 +289,26 @@ public class QuestManager : MonoBehaviour
             questTween,
             () => questTween = null
         );
+    }
+
+    public static void SaveSelectedMode(QuestMode selectedMode)
+    {
+        PlayerPrefs.SetString(SelectedModePlayerPrefsKey, selectedMode.ToString());
+        PlayerPrefs.Save();
+    }
+
+    private void ApplySelectedModeFromMainMenu()
+    {
+        if (!useSelectedModeFromMainMenu || !PlayerPrefs.HasKey(SelectedModePlayerPrefsKey))
+        {
+            return;
+        }
+
+        string selectedMode = PlayerPrefs.GetString(SelectedModePlayerPrefsKey);
+        if (Enum.TryParse(selectedMode, out QuestMode parsedMode))
+        {
+            mode = parsedMode;
+        }
     }
 
     private void AdvanceStory()
