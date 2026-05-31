@@ -16,6 +16,7 @@ public class FireSpawner : MonoBehaviour
 
     [Header("Spawn")]
     public int spawnCount = 3;
+    public int maxAttemptsPerFire = 1000;
 
     void Awake()
     {
@@ -53,9 +54,7 @@ public class FireSpawner : MonoBehaviour
 
         for (int i = 0; i < spawnCount; i++)
         {
-            Vector3 pos = GetRandomPointOnTerrain();
-
-            if (IsValidHeight(pos.y))
+            if (TryGetRandomValidPointOnTerrain(out Vector3 pos))
             {
                 GameObject fire = Instantiate(firePrefab, pos, Quaternion.identity);
                 fire.transform.rotation = Quaternion.Euler(-90, 0, 0);
@@ -69,6 +68,13 @@ public class FireSpawner : MonoBehaviour
                 FireSpawned?.Invoke(fire, node);
                 spawnedCount++;
             }
+            else
+            {
+                Debug.LogWarning(
+                    $"[{nameof(FireSpawner)}] Tidak menemukan posisi dengan height valid ({minHeight}-{maxHeight}) setelah {maxAttemptsPerFire} percobaan.",
+                    this
+                );
+            }
         }
 
         return spawnedCount;
@@ -77,6 +83,26 @@ public class FireSpawner : MonoBehaviour
     public bool IsValidHeight(float height)
     {
         return height >= minHeight && height <= maxHeight;
+    }
+
+    bool TryGetRandomValidPointOnTerrain(out Vector3 position)
+    {
+        int attempts = 0;
+
+        do
+        {
+            position = GetRandomPointOnTerrain();
+
+            if (IsValidHeight(position.y))
+            {
+                return true;
+            }
+
+            attempts++;
+        }
+        while (maxAttemptsPerFire <= 0 || attempts < maxAttemptsPerFire);
+
+        return false;
     }
 
     Vector3 GetRandomPointOnTerrain()
