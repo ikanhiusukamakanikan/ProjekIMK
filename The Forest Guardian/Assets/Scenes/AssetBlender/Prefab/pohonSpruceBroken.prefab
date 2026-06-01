@@ -112,7 +112,7 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.007
-  m_Height: 0.04
+  m_Height: 0.03
   m_Direction: 2
   m_Center: {x: 0.008371555, y: -0.0028297105, z: 0.060126226}
 --- !u!1 &5047153575531141938
@@ -252,7 +252,7 @@ Rigidbody:
   serializedVersion: 5
   m_Mass: 1000
   m_LinearDamping: 0
-  m_AngularDamping: 0.5
+  m_AngularDamping: 5
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -289,7 +289,7 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.008
-  m_Height: 0.38
+  m_Height: 0.37
   m_Direction: 2
   m_Center: {x: 0.009932689, y: -0.003174877, z: 0.2627934}
 --- !u!1 &8064693435859156967

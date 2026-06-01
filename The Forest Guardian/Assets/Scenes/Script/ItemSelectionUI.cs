@@ -62,6 +62,7 @@ public class ItemSelectionUI : MonoBehaviour
     [Header("Input")]
     public KeyCode keyboardToggleKey = KeyCode.I;
     public bool useLeftControllerXButton = true;
+    public GameObject RayInteractor;
 
 #if ENABLE_INPUT_SYSTEM
     public Key inputSystemKeyboardToggleKey = Key.I;
@@ -195,6 +196,7 @@ public class ItemSelectionUI : MonoBehaviour
             itemSelectionRoot.SetActive(true);
         }
 
+        SetRayInteractorActive(visible);
         PlayMenuVisibilityAnimation(visible);
         NotifyVisibilityChanged(visible);
 
@@ -219,6 +221,7 @@ public class ItemSelectionUI : MonoBehaviour
             itemSelectionRoot.SetActive(true);
         }
 
+        SetRayInteractorActive(visible);
         KillMenuAnimation();
         itemSelectionCanvasGroup.alpha = visible ? 1f : 0f;
         itemSelectionCanvasGroup.interactable = visible;
@@ -324,6 +327,14 @@ public class ItemSelectionUI : MonoBehaviour
             menuVisibilityRoutine = null;
         }
 #endif
+    }
+
+    private void SetRayInteractorActive(bool active)
+    {
+        if (RayInteractor != null && RayInteractor.activeSelf != active)
+        {
+            RayInteractor.SetActive(active);
+        }
     }
 
     private void SetMenuScale(Vector3 scale)
