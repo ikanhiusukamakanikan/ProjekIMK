@@ -46,6 +46,7 @@ public class FireNode : MonoBehaviour
     private bool hasReportedBurnedOut;
     private bool hasReportedExtinguished;
     private bool hasAppliedIgniteEffects;
+    private float nextExtinguishSoundTime;
 
     void Awake()
     {
@@ -246,6 +247,12 @@ public class FireNode : MonoBehaviour
 
         currentHealth -= dmg;
         Log($"DAMAGE {dmg} | HP {currentHealth}");
+
+        if (Time.time >= nextExtinguishSoundTime)
+        {
+            SoundManager.PlaySound(SoundType.FireExtinguish);
+            nextExtinguishSoundTime = Time.time + 3f;
+        }
 
         UpdateVisual();
 

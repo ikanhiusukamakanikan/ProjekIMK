@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class VRShovelDig : MonoBehaviour
 {
@@ -27,6 +28,33 @@ public class VRShovelDig : MonoBehaviour
     private Vector3 lastPosition;
     private float velocity;
     private float lastDigTime;
+    private UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable grabInteractable;
+
+    void Awake()
+    {
+        grabInteractable = GetComponentInParent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable>();
+    }
+
+    void OnEnable()
+    {
+        if (grabInteractable != null)
+        {
+            grabInteractable.selectEntered.AddListener(OnGrab);
+        }
+    }
+
+    void OnDisable()
+    {
+        if (grabInteractable != null)
+        {
+            grabInteractable.selectEntered.RemoveListener(OnGrab);
+        }
+    }
+
+    private void OnGrab(SelectEnterEventArgs args)
+    {
+        SoundManager.PlaySound(SoundType.Pickup);
+    }
 
     void Start()
     {
@@ -66,6 +94,7 @@ public class VRShovelDig : MonoBehaviour
 
                 RemoveGrass(hitPoint);
                 SpawnDirt(hitPoint);
+                SoundManager.PlaySound(SoundType.ShovelDig);
                 Dug?.Invoke(hitPoint);
 
                 lastDigTime = Time.time;

@@ -197,6 +197,7 @@ public class ItemSelectionUI : MonoBehaviour
         }
 
         SetRayInteractorActive(visible);
+        SoundManager.PlaySound(visible ? SoundType.UIPopup : SoundType.UIClose);
         PlayMenuVisibilityAnimation(visible);
         NotifyVisibilityChanged(visible);
 
@@ -362,6 +363,8 @@ public class ItemSelectionUI : MonoBehaviour
             return;
         }
 
+        SoundManager.PlaySound(SoundType.Click);
+
 #if DOTWEEN || USE_DOTWEEN
         PlaySelectTween(index, runtime);
 #else
@@ -440,6 +443,8 @@ public class ItemSelectionUI : MonoBehaviour
         );
 
         currentSpawnedItem = spawnedItem;
+        SoundManager.PlaySound(SoundType.ItemSummon);
+        AddPickupSoundForSpawnedItem(spawnedItem);
 
         if (spawnedParent != null)
         {
@@ -509,6 +514,46 @@ public class ItemSelectionUI : MonoBehaviour
         }
     }
 
+    private void AddPickupSoundForSpawnedItem(GameObject spawnedItem)
+    {
+        if (spawnedItem == null)
+        {
+            return;
+        }
+
+        UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable[] grabInteractables =
+            spawnedItem.GetComponentsInChildren<UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable>(true);
+
+        for (int i = 0; i < grabInteractables.Length; i++)
+        {
+            UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable grabInteractable = grabInteractables[i];
+            if (grabInteractable == null || HasBuiltInPickupSound(grabInteractable.gameObject))
+            {
+                continue;
+            }
+
+            XRGrabPickupSound pickupSound = grabInteractable.GetComponent<XRGrabPickupSound>();
+            if (pickupSound == null)
+            {
+                pickupSound = grabInteractable.gameObject.AddComponent<XRGrabPickupSound>();
+            }
+
+            pickupSound.grabInteractable = grabInteractable;
+        }
+    }
+
+    private bool HasBuiltInPickupSound(GameObject target)
+    {
+        return target.GetComponentInParent<TreeScanner>() != null
+            || target.GetComponentInParent<AxeHit>() != null
+            || target.GetComponentInParent<VRShovelDig>() != null
+            || target.GetComponentInParent<FireHoseSpray>() != null
+            || target.GetComponentInChildren<TreeScanner>(true) != null
+            || target.GetComponentInChildren<AxeHit>(true) != null
+            || target.GetComponentInChildren<VRShovelDig>(true) != null
+            || target.GetComponentInChildren<FireHoseSpray>(true) != null;
+    }
+
     private void RegisterEvents(GameObject buttonObject, int index)
     {
         EventTrigger eventTrigger = buttonObject.GetComponent<EventTrigger>();
@@ -553,6 +598,11 @@ public class ItemSelectionUI : MonoBehaviour
         if (runtime == null)
         {
             return;
+        }
+
+        if (isHovered)
+        {
+            SoundManager.PlaySound(SoundType.Hover);
         }
 
 #if DOTWEEN || USE_DOTWEEN

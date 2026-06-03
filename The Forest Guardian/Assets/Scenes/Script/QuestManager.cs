@@ -97,6 +97,8 @@ public class QuestManager : MonoBehaviour
     [Header("References")]
     public StatsIndicatorUI statsIndicator;
     public FireSpawner fireSpawner;
+    public WinUIHandler winUIHandler;
+    public LoseUIHandler loseUIHandler;
 
     [Header("Dialog UI")]
     public CanvasGroup dialogCanvasGroup;
@@ -229,7 +231,7 @@ public class QuestManager : MonoBehaviour
         HandleInputObjectives();
         HandleFireStatsTick();
         HandleRestoreStatsObjective();
-        CheckFireLoseByStats();
+        CheckLoseByStats();
     }
 
     void OnDisable()
@@ -627,12 +629,38 @@ public class QuestManager : MonoBehaviour
 
     private void ShowWinScreen()
     {
-        // TODO: Tambahkan Win UI Screen di sini.
+        ResolveReferences();
+
+        if (mode != QuestMode.Story || winUIHandler == null)
+        {
+            return;
+        }
+
+        if (statsIndicator != null)
+        {
+            winUIHandler.Show(statsIndicator.Snapshot);
+            return;
+        }
+
+        winUIHandler.Show();
     }
 
     private void ShowLoseScreen()
     {
-        // TODO: Tambahkan Lose UI Screen di sini.
+        ResolveReferences();
+
+        if (loseUIHandler == null)
+        {
+            return;
+        }
+
+        if (statsIndicator != null)
+        {
+            loseUIHandler.Show(statsIndicator.Snapshot);
+            return;
+        }
+
+        loseUIHandler.Show();
     }
 
     private void HandleInputObjectives()
@@ -675,9 +703,9 @@ public class QuestManager : MonoBehaviour
         fireTickDelta.Apply(statsIndicator, true, multiplier);
     }
 
-    private void CheckFireLoseByStats()
+    private void CheckLoseByStats()
     {
-        if (!fireEmergencyActive || statsIndicator == null || !statsIndicator.IsDanger)
+        if (statsIndicator == null || !statsIndicator.IsDanger)
         {
             return;
         }
@@ -1087,6 +1115,16 @@ public class QuestManager : MonoBehaviour
         if (fireSpawner == null)
         {
             fireSpawner = FireSpawner.Instance;
+        }
+
+        if (winUIHandler == null)
+        {
+            winUIHandler = FindObjectOfType<WinUIHandler>(true);
+        }
+
+        if (loseUIHandler == null)
+        {
+            loseUIHandler = FindObjectOfType<LoseUIHandler>(true);
         }
 
         if (dialogCanvasGroup == null && dialogPanel != null)

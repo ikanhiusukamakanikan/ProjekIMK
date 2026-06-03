@@ -221,6 +221,11 @@ public class MainMenuManager : MonoBehaviour
 
     public void HandleButtonHovered(MenuAction action, bool isHovered)
     {
+        if (isHovered)
+        {
+            SoundManager.PlaySound(SoundType.Hover);
+        }
+
         ButtonRuntime runtime = GetRuntime(action);
         if (runtime == null)
         {
@@ -232,6 +237,8 @@ public class MainMenuManager : MonoBehaviour
 
     public void HandleButtonClicked(MenuAction action)
     {
+        SoundManager.PlaySound(SoundType.Click);
+
         ButtonRuntime runtime = GetRuntime(action);
         if (runtime == null)
         {
@@ -373,6 +380,8 @@ public class MainMenuManager : MonoBehaviour
             return;
         }
 
+        SoundManager.PlaySound(open ? SoundType.UIPopup : SoundType.UIClose);
+
         stageOpen = open;
         menuTransitionPlaying = true;
         menuTransitionTween?.Kill();
@@ -508,8 +517,13 @@ public class MainMenuManager : MonoBehaviour
 
         if (open)
         {
+            SoundManager.PlaySound(SoundType.UIPopup);
             settingsCanvasGroup.alpha = 0f;
             settingsPanel.transform.localScale = settingsVisibleScale * settingsHiddenScale;
+        }
+        else
+        {
+            SoundManager.PlaySound(SoundType.UIClose);
         }
 
         settingsTween = DOTween.Sequence()

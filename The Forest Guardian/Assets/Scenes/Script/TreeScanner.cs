@@ -52,6 +52,7 @@ public class TreeScanner : MonoBehaviour
     private void OnGrab(SelectEnterEventArgs args)
     {
         Debug.Log("[TreeScanner] Scanner Grabbed");
+        SoundManager.PlaySound(SoundType.Pickup);
 
         isHeld = true;
 
@@ -151,6 +152,7 @@ public class TreeScanner : MonoBehaviour
                     if (treeData.isBadTree)
                     {
                         Debug.Log("[TreeScanner] BAD TREE DETECTED");
+                        SoundManager.PlaySound(SoundType.ScannerError);
 
                         if (resultImage != null)
                         {
@@ -160,6 +162,7 @@ public class TreeScanner : MonoBehaviour
                     else
                     {
                         Debug.Log("[TreeScanner] GOOD TREE DETECTED");
+                        SoundManager.PlaySound(SoundType.ScannerBeep);
 
                         if (resultImage != null)
                         {

@@ -34,6 +34,7 @@ public class TreeChop : MonoBehaviour
         Debug.Log("[TreeChop] Chop called");
 
         currentHits++;
+        SoundManager.PlaySound(SoundType.AxeChop);
 
         Debug.Log($"[TreeChop] Current Hits: {currentHits}/{maxHits}");
 
@@ -73,6 +74,7 @@ public class TreeChop : MonoBehaviour
         }
 
         hasBroken = true;
+        SoundManager.PlaySound(SoundType.TreeFall);
 
         Debug.Log("[TreeChop] Instantiating broken tree prefab...");
 

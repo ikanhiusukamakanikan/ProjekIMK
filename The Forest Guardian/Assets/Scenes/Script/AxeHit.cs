@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class AxeHit : MonoBehaviour
 {
@@ -9,6 +10,33 @@ public class AxeHit : MonoBehaviour
     public bool showDebugRay = true;
 
     private Vector3 lastPosition;
+    private UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable grabInteractable;
+
+    void Awake()
+    {
+        grabInteractable = GetComponentInParent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable>();
+    }
+
+    void OnEnable()
+    {
+        if (grabInteractable != null)
+        {
+            grabInteractable.selectEntered.AddListener(OnGrab);
+        }
+    }
+
+    void OnDisable()
+    {
+        if (grabInteractable != null)
+        {
+            grabInteractable.selectEntered.RemoveListener(OnGrab);
+        }
+    }
+
+    private void OnGrab(SelectEnterEventArgs args)
+    {
+        SoundManager.PlaySound(SoundType.Pickup);
+    }
 
     void Start()
     {

@@ -40,6 +40,8 @@ public class FireHoseSpray : MonoBehaviour
 
     private void OnGrab(SelectEnterEventArgs args)
     {
+        SoundManager.PlaySound(SoundType.Pickup);
+
         if (sprayObject != null)
             sprayObject.SetActive(true);
 

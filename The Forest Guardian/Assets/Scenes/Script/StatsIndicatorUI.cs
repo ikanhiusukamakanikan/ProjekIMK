@@ -229,6 +229,7 @@ public class StatsIndicatorUI : MonoBehaviour
         }
 
         visibilityTween?.Kill();
+        SoundManager.PlaySound(visible ? SoundType.UIPopup : SoundType.UIClose);
 
         canvasGroup.interactable = visible;
         canvasGroup.blocksRaycasts = visible;

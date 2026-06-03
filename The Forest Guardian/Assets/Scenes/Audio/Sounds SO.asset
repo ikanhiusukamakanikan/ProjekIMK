@@ -1,0 +1,118 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d615559269674c341ad8e6b40e5a7ab4, type: 3}
+  m_Name: Sounds SO
+  m_EditorClassIdentifier: Assembly-CSharp::SoundsSO
+  sounds:
+  - type: 0
+    volume: 1
+    sameSoundWindow: 0.8
+    maxSameSoundInWindow: 3
+    sounds:
+    - {fileID: 8300000, guid: f99acbf22654df145b78c7d0fdc38baa, type: 3}
+  - type: 1
+    volume: 1
+    sameSoundWindow: 0.8
+    maxSameSoundInWindow: 3
+    sounds:
+    - {fileID: 8300000, guid: 813e78e221803e34f9fb911fbb50b391, type: 3}
+  - type: 2
+    volume: 1
+    sameSoundWindow: 0.8
+    maxSameSoundInWindow: 3
+    sounds:
+    - {fileID: 8300000, guid: a0c7508ecf72b1347be9d8c947889600, type: 3}
+  - type: 3
+    volume: 1
+    sameSoundWindow: 0.8
+    maxSameSoundInWindow: 3
+    sounds:
+    - {fileID: 8300000, guid: a6ce5e9c03be5384ca7190a8d0c40e91, type: 3}
+  - type: 4
+    volume: 1
+    sameSoundWindow: 0.8
+    maxSameSoundInWindow: 3
+    sounds:
+    - {fileID: 8300000, guid: 38ea98ce3144e084b8a0668f73211524, type: 3}
+  - type: 5
+    volume: 1
+    sameSoundWindow: 0.8
+    maxSameSoundInWindow: 3
+    sounds:
+    - {fileID: 8300000, guid: 4f1e8e5634f6c4348806d6d680611f7e, type: 3}
+  - type: 6
+    volume: 1
+    sameSoundWindow: 0.8
+    maxSameSoundInWindow: 3
+    sounds:
+    - {fileID: 8300000, guid: eb908c3cc61c1794ba72d6c2e0f5ce7c, type: 3}
+    - {fileID: 8300000, guid: db498063878c8fb408e75272cef19453, type: 3}
+  - type: 7
+    volume: 1
+    sameSoundWindow: 0.8
+    maxSameSoundInWindow: 3
+    sounds:
+    - {fileID: 8300000, guid: 61bd30cc20004c94aab4e74b5fc91a64, type: 3}
+  - type: 8
+    volume: 1
+    sameSoundWindow: 0.8
+    maxSameSoundInWindow: 3
+    sounds:
+    - {fileID: 8300000, guid: bb0a29779664bef4b86013ae014effa7, type: 3}
+  - type: 9
+    volume: 1
+    sameSoundWindow: 0.8
+    maxSameSoundInWindow: 3
+    sounds:
+    - {fileID: 8300000, guid: b06796c022188524e8a6e5eb86bf3efa, type: 3}
+  - type: 10
+    volume: 1
+    sameSoundWindow: 0.8
+    maxSameSoundInWindow: 3
+    sounds:
+    - {fileID: 8300000, guid: 03f60d7b49cf20640a9850d6eed51aed, type: 3}
+  - type: 11
+    volume: 1
+    sameSoundWindow: 0.8
+    maxSameSoundInWindow: 3
+    sounds:
+    - {fileID: 8300000, guid: 202dc3d94ea5012429403da0af23c54f, type: 3}
+  - type: 12
+    volume: 1
+    sameSoundWindow: 0.8
+    maxSameSoundInWindow: 3
+    sounds:
+    - {fileID: 8300000, guid: c6fba15083fc1614ba1254bfe1c4c59d, type: 3}
+  - type: 13
+    volume: 1
+    sameSoundWindow: 0.8
+    maxSameSoundInWindow: 3
+    sounds:
+    - {fileID: 8300000, guid: 73ae801ef94b2e94e9e7f797d95da6e9, type: 3}
+  - type: 14
+    volume: 1
+    sameSoundWindow: 0.8
+    maxSameSoundInWindow: 3
+    sounds:
+    - {fileID: 8300000, guid: 52cd7801501c67241aba0ce82bb2cfd2, type: 3}
+  - type: 15
+    volume: 1
+    sameSoundWindow: 0.8
+    maxSameSoundInWindow: 3
+    sounds:
+    - {fileID: 8300000, guid: 0d6684f4edf1f8b4888870105bf1bbf3, type: 3}
+  - type: 16
+    volume: 1
+    sameSoundWindow: 0.8
+    maxSameSoundInWindow: 3
+    sounds:
+    - {fileID: 8300000, guid: 1169709e8c9bb4a4c9a29dfd80d4e3bd, type: 3}

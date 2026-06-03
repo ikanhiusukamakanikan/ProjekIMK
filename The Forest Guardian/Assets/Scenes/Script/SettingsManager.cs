@@ -80,6 +80,8 @@ public class SettingsManager : MonoBehaviour
             return;
         }
 
+        SoundManager.PlaySound(SoundType.UIClose);
+
         if (settingsPanel != null)
         {
             settingsPanel.SetActive(false);
@@ -145,6 +147,11 @@ public class SettingsManager : MonoBehaviour
 
     public void HandleBackButtonHovered(bool isHovered)
     {
+        if (isHovered)
+        {
+            SoundManager.PlaySound(SoundType.Hover);
+        }
+
         if (backHoverObject == null)
         {
             return;
@@ -192,6 +199,8 @@ public class SettingsManager : MonoBehaviour
 
     public void PlayBackButtonClick()
     {
+        SoundManager.PlaySound(SoundType.Click);
+
         if (backButtonObject == null)
         {
             CloseSettings();
@@ -342,6 +351,8 @@ public class SettingsManager : MonoBehaviour
 
     private void OnMasterVolumeChanged(float value)
     {
+        SoundManager.PlaySound(SoundType.Click);
+
         float snappedStep = Mathf.Round(value);
         masterVolumeSlider.SetValueWithoutNotify(snappedStep);
 

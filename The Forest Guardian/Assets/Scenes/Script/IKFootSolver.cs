@@ -22,11 +22,14 @@ public class IKFootSolver : MonoBehaviour
 
     public float rayStartYOffset = 0;
     public float rayLength = 1.5f;
+    public float footstepMinInterval = 0.12f;
     
     float footSpacing;
     Vector3 oldPosition, currentPosition, newPosition;
     Vector3 oldNormal, currentNormal, newNormal;
     float lerp;
+    bool stepSoundPending;
+    float lastFootstepTime;
 
     private void Start()
     {
@@ -69,6 +72,8 @@ public class IKFootSolver : MonoBehaviour
                     newNormal = info.normal;
                 }
 
+                stepSoundPending = true;
+
             }
         }
 
@@ -83,6 +88,13 @@ public class IKFootSolver : MonoBehaviour
         }
         else
         {
+            if (stepSoundPending && Time.time - lastFootstepTime >= footstepMinInterval)
+            {
+                SoundManager.PlaySound(SoundType.PlayerStep);
+                lastFootstepTime = Time.time;
+                stepSoundPending = false;
+            }
+
             oldPosition = newPosition;
             oldNormal = newNormal;
         }

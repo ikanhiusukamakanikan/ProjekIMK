@@ -40,6 +40,7 @@ public class TanahGrowTree : MonoBehaviour
             }
 
             alreadyTriggered = true;
+            SoundManager.PlaySound(SoundType.Planting);
             Destroy(other.gameObject);
             StartCoroutine(GrowSequence());
         }
