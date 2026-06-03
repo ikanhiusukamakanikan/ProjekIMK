@@ -1227,7 +1227,7 @@ Transform:
   m_GameObject: {fileID: 214540880}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.882, z: -1.388}
+  m_LocalPosition: {x: 0, y: -2.97, z: -1.388}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8286,6 +8286,7 @@ MonoBehaviour:
   footYPosOffset: 0.1
   rayStartYOffset: 0
   rayLength: 1.5
+  footstepMinInterval: 0.12
 --- !u!1001 &1499964487
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10000,6 +10001,7 @@ MonoBehaviour:
   footYPosOffset: 0.1
   rayStartYOffset: 0
   rayLength: 1.5
+  footstepMinInterval: 0.12
 --- !u!1 &1946508875
 GameObject:
   m_ObjectHideFlags: 0

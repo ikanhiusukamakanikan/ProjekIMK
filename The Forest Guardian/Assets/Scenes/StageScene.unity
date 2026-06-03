@@ -2834,7 +2834,7 @@ Transform:
   m_GameObject: {fileID: 214540880}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 75.68, y: 13.458, z: 85.53}
+  m_LocalPosition: {x: 75.68, y: 10.55, z: 85.53}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -12215,7 +12215,7 @@ PrefabInstance:
     - target: {fileID: 8135023674665499069, guid: 58d0a4ac86f2348deb02f3880c71378e,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8518324294302271954, guid: 58d0a4ac86f2348deb02f3880c71378e,
         type: 3}
@@ -31333,37 +31333,37 @@ MonoBehaviour:
   dialogAutoHideDelay: 3.5
   panelAppearEase: 27
   panelDisappearEase: 8
-  badTreesToChop: 5
-  treesToPlantAfterChop: 3
-  treesToPlantAfterFire: 5
+  badTreesToChop: 1
+  treesToPlantAfterChop: 1
+  treesToPlantAfterFire: 2
   sandboxScanTarget: 1
   sandboxChopTarget: 5
   sandboxPlantTarget: 3
   chopBadTreeDelta:
     coverage: -2
-    co2Level: 25
+    co2Level: 15
     damagePercent: 3
     temperature: 0.3
   digDelta:
-    coverage: -1
+    coverage: -0.1
     co2Level: 12
-    damagePercent: 2
-    temperature: 0.2
+    damagePercent: 0.5
+    temperature: 0.1
   plantTreeDelta:
-    coverage: 4
-    co2Level: -35
+    coverage: 5
+    co2Level: -60
     damagePercent: -6
-    temperature: -0.5
+    temperature: -1
   fireIgniteDelta:
-    coverage: -4
-    co2Level: 80
-    damagePercent: 8
+    coverage: -2
+    co2Level: 50
+    damagePercent: 5
     temperature: 1.5
   fireTickDelta:
-    coverage: -0.8
-    co2Level: 18
-    damagePercent: 2
-    temperature: 0.35
+    coverage: 0
+    co2Level: 0
+    damagePercent: 0
+    temperature: 0
   fireLoseGeneration: 3
   fireStatsTickInterval: 1
   maxFireTickMultiplier: 5
