@@ -295,7 +295,7 @@ MonoBehaviour:
   spawnCount: 1
   spawnSpread: 0
   dirtForce: 3
-  destroyAfter: 30
+  destroyAfter: 180
   shovelHead: {fileID: 4783809972489681638}
   cooldown: 1
 --- !u!1 &416855965951940012

@@ -15,6 +15,7 @@ public class WinUIHandler : MonoBehaviour, IEndScreenButtonOwner
     public RectTransform winRect;
     public bool hideOnStart = true;
     public bool deactivateRootWhenHidden;
+    public GameObject RayInteractor;
 
     [Header("Stats Source")]
     public StatsIndicatorUI statsIndicator;
@@ -234,6 +235,7 @@ public class WinUIHandler : MonoBehaviour, IEndScreenButtonOwner
         CacheRoot();
         visibilityTween?.Kill();
         winRoot.SetActive(true);
+        SetRayInteractorActive(visible);
         winCanvasGroup.interactable = visible;
         winCanvasGroup.blocksRaycasts = visible;
 
@@ -277,6 +279,7 @@ public class WinUIHandler : MonoBehaviour, IEndScreenButtonOwner
         visibilityTween?.Kill();
         visibilityTween = null;
         winRoot.SetActive(visible || !deactivateRootWhenHidden);
+        SetRayInteractorActive(visible);
         winCanvasGroup.alpha = visible ? 1f : 0f;
         winCanvasGroup.interactable = visible;
         winCanvasGroup.blocksRaycasts = visible;
@@ -302,5 +305,13 @@ public class WinUIHandler : MonoBehaviour, IEndScreenButtonOwner
         }
 
         winRoot.transform.localScale = scale;
+    }
+
+    private void SetRayInteractorActive(bool active)
+    {
+        if (RayInteractor != null && RayInteractor.activeSelf != active)
+        {
+            RayInteractor.SetActive(active);
+        }
     }
 }

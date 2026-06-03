@@ -13551,6 +13551,7 @@ MonoBehaviour:
   winRect: {fileID: 1225708722}
   hideOnStart: 1
   deactivateRootWhenHidden: 0
+  RayInteractor: {fileID: 1607837253}
   statsIndicator: {fileID: 175945602}
   damageText: {fileID: 918364228}
   co2Text: {fileID: 280049184}
@@ -31369,6 +31370,13 @@ MonoBehaviour:
   maxFireTickMultiplier: 5
   movementInputThreshold: 0.35
   lookInputThreshold: 0.35
+  enableVrSprint: 1
+  continuousMoveProvider: {fileID: 962723338}
+  autoFindContinuousMoveProvider: 1
+  walkSpeed: 2
+  sprintSpeed: 4
+  sprintAcceleration: 1.5
+  sprintDeceleration: 2.5
 --- !u!4 &1648631987
 Transform:
   m_ObjectHideFlags: 0
@@ -33222,7 +33230,7 @@ MonoBehaviour:
   pauseMenuCanvasGroup: {fileID: 0}
   hidePauseMenuOnStart: 1
   pauseKey: 27
-  RayInteractor: {fileID: 0}
+  RayInteractor: {fileID: 1607837253}
   enableVrControllerPause: 1
   vrControllerHand: 0
   vrPauseButton: 0
@@ -35734,6 +35742,7 @@ MonoBehaviour:
   loseRect: {fileID: 1427218539}
   hideOnStart: 1
   deactivateRootWhenHidden: 0
+  RayInteractor: {fileID: 1607837253}
   statsIndicator: {fileID: 175945602}
   damageText: {fileID: 1214114263}
   co2Text: {fileID: 1941941214}

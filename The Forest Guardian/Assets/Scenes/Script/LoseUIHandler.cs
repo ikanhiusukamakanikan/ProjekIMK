@@ -21,6 +21,7 @@ public class LoseUIHandler : MonoBehaviour, IEndScreenButtonOwner
     public RectTransform loseRect;
     public bool hideOnStart = true;
     public bool deactivateRootWhenHidden;
+    public GameObject RayInteractor;
 
     [Header("Stats Source")]
     public StatsIndicatorUI statsIndicator;
@@ -270,6 +271,7 @@ public class LoseUIHandler : MonoBehaviour, IEndScreenButtonOwner
         CacheRoot();
         visibilityTween?.Kill();
         loseRoot.SetActive(true);
+        SetRayInteractorActive(visible);
         loseCanvasGroup.interactable = visible;
         loseCanvasGroup.blocksRaycasts = visible;
 
@@ -313,6 +315,7 @@ public class LoseUIHandler : MonoBehaviour, IEndScreenButtonOwner
         visibilityTween?.Kill();
         visibilityTween = null;
         loseRoot.SetActive(visible || !deactivateRootWhenHidden);
+        SetRayInteractorActive(visible);
         loseCanvasGroup.alpha = visible ? 1f : 0f;
         loseCanvasGroup.interactable = visible;
         loseCanvasGroup.blocksRaycasts = visible;
@@ -338,5 +341,13 @@ public class LoseUIHandler : MonoBehaviour, IEndScreenButtonOwner
         }
 
         loseRoot.transform.localScale = scale;
+    }
+
+    private void SetRayInteractorActive(bool active)
+    {
+        if (RayInteractor != null && RayInteractor.activeSelf != active)
+        {
+            RayInteractor.SetActive(active);
+        }
     }
 }

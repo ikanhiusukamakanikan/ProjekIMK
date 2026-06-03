@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -21,6 +22,7 @@ public class QuestManager : MonoBehaviour
         None,
         Move,
         Look,
+        Sprint,
         OpenInventory,
         SummonScanner,
         GrabScanner,
@@ -42,6 +44,7 @@ public class QuestManager : MonoBehaviour
         None,
         Move,
         Look,
+        Sprint,
         OpenInventory,
         SummonScanner,
         GrabScanner,
@@ -143,6 +146,15 @@ public class QuestManager : MonoBehaviour
     public float movementInputThreshold = 0.35f;
     public float lookInputThreshold = 0.35f;
 
+    [Header("VR Sprint")]
+    public bool enableVrSprint = true;
+    public MonoBehaviour continuousMoveProvider;
+    public bool autoFindContinuousMoveProvider = true;
+    public float walkSpeed = 2f;
+    public float sprintSpeed = 4f;
+    public float sprintAcceleration = 1.5f;
+    public float sprintDeceleration = 2.5f;
+
     public event Action QuestWon;
     public event Action<string> QuestLost;
 
@@ -169,6 +181,8 @@ public class QuestManager : MonoBehaviour
     private Tween questPulseTween;
     private CanvasGroup questCanvasGroup;
     private RectTransform questPanel;
+    private PropertyInfo moveSpeedProperty;
+    private FieldInfo moveSpeedField;
 
     void Awake()
     {
@@ -222,6 +236,8 @@ public class QuestManager : MonoBehaviour
         {
             HandleSandboxHotkeys();
         }
+
+        HandleVrSprint();
 
         if (!questRunning || questFinished)
         {
@@ -324,6 +340,9 @@ public class QuestManager : MonoBehaviour
                 BeginStoryStep(StoryStep.Look);
                 break;
             case StoryStep.Look:
+                BeginStoryStep(StoryStep.Sprint);
+                break;
+            case StoryStep.Sprint:
                 BeginStoryStep(StoryStep.OpenInventory);
                 break;
             case StoryStep.OpenInventory:
@@ -380,14 +399,17 @@ public class QuestManager : MonoBehaviour
             case StoryStep.Look:
                 StartObjective(ObjectiveType.Look, "Look Around", 1, "Move the camera with the right joystick.");
                 break;
+            case StoryStep.Sprint:
+                StartObjective(ObjectiveType.Sprint, "Try Running", 1, "Hold the right controller primary button to run.");
+                break;
             case StoryStep.OpenInventory:
-                StartObjective(ObjectiveType.OpenInventory, "Open Inventory", 1, "Open the inventory to summon the scanner.");
+                StartObjective(ObjectiveType.OpenInventory, "Open Inventory", 1, "Open the inventory using [X | Primary Button] to summon the scanner.");
                 break;
             case StoryStep.SummonScanner:
                 StartObjective(ObjectiveType.SummonScanner, "Summon Scanner", 1, "Choose the scanner from the inventory.");
                 break;
             case StoryStep.GrabScanner:
-                StartObjective(ObjectiveType.GrabScanner, "Grab Scanner", 1, "Grab the scanner with XR Grab.");
+                StartObjective(ObjectiveType.GrabScanner, "Grab Scanner", 1, "Grab the scanner with [Grip Button].");
                 break;
             case StoryStep.ScanBadTree:
                 StartObjective(ObjectiveType.ScanBadTree, "Scan Bad Tree", 1, "Aim the scanner at a bad tree.");
@@ -461,6 +483,7 @@ public class QuestManager : MonoBehaviour
 #if ENABLE_LEGACY_INPUT_MANAGER
         if (Input.GetKeyDown(KeyCode.Keypad1))
         {
+            ClearAllFireObjects();
             StartSandboxObjective(
                 ObjectiveType.ScanBadTree,
                 BuildTargetLabel("Scan", sandboxScanTarget, "Bad Trees"),
@@ -470,6 +493,7 @@ public class QuestManager : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Keypad2))
         {
+            ClearAllFireObjects();
             StartSandboxObjective(
                 ObjectiveType.ChopBadTree,
                 BuildTargetLabel("Chop", sandboxChopTarget, "Bad Trees"),
@@ -479,10 +503,12 @@ public class QuestManager : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Keypad3))
         {
+            ClearAllFireObjects();
             BeginFireEmergencyObjective("Fire sandbox quest started. Extinguish all active fires.");
         }
         else if (Input.GetKeyDown(KeyCode.Keypad4))
         {
+            ClearAllFireObjects();
             sandboxPlantFlowActive = true;
             StartSandboxObjective(
                 ObjectiveType.Dig,
@@ -670,6 +696,10 @@ public class QuestManager : MonoBehaviour
             AddObjectiveProgress();
         }
         else if (currentObjective == ObjectiveType.Look && HasLookInput())
+        {
+            AddObjectiveProgress();
+        }
+        else if (currentObjective == ObjectiveType.Sprint && HasRightPrimaryButtonInput())
         {
             AddObjectiveProgress();
         }
@@ -889,6 +919,149 @@ public class QuestManager : MonoBehaviour
         }
 
         return HasControllerAxis(InputDeviceCharacteristics.Right, lookInputThreshold);
+    }
+
+    private bool HasRightPrimaryButtonInput()
+    {
+        controllers.Clear();
+        InputDevices.GetDevicesWithCharacteristics(
+            InputDeviceCharacteristics.Right | InputDeviceCharacteristics.Controller,
+            controllers
+        );
+
+        for (int i = 0; i < controllers.Count; i++)
+        {
+            if (controllers[i].TryGetFeatureValue(CommonUsages.primaryButton, out bool pressed)
+                && pressed)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private void HandleVrSprint()
+    {
+        if (!enableVrSprint)
+        {
+            return;
+        }
+
+        ResolveContinuousMoveProvider();
+
+        if (continuousMoveProvider == null)
+        {
+            return;
+        }
+
+        bool sprintPressed = HasRightPrimaryButtonInput();
+        float targetSpeed = sprintPressed ? sprintSpeed : walkSpeed;
+        float speedChange = sprintPressed ? sprintAcceleration : sprintDeceleration;
+        float currentSpeed = GetMoveProviderSpeed(walkSpeed);
+        float nextSpeed = Mathf.MoveTowards(
+            currentSpeed,
+            targetSpeed,
+            Mathf.Max(0.01f, speedChange) * Time.deltaTime
+        );
+
+        SetMoveProviderSpeed(nextSpeed);
+    }
+
+    private void ResolveContinuousMoveProvider()
+    {
+        if (continuousMoveProvider != null || !autoFindContinuousMoveProvider)
+        {
+            CacheMoveProviderSpeedAccessors();
+            return;
+        }
+
+        MonoBehaviour[] behaviours = FindObjectsOfType<MonoBehaviour>(true);
+        for (int i = 0; i < behaviours.Length; i++)
+        {
+            if (behaviours[i] == null)
+            {
+                continue;
+            }
+
+            Type behaviourType = behaviours[i].GetType();
+            if (behaviourType.Name == "ContinuousMoveProvider" || behaviourType.Name == "DynamicMoveProvider")
+            {
+                continuousMoveProvider = behaviours[i];
+                CacheMoveProviderSpeedAccessors();
+                SetMoveProviderSpeed(walkSpeed);
+                return;
+            }
+        }
+    }
+
+    private void CacheMoveProviderSpeedAccessors()
+    {
+        if (continuousMoveProvider == null || moveSpeedProperty != null || moveSpeedField != null)
+        {
+            return;
+        }
+
+        Type providerType = continuousMoveProvider.GetType();
+        moveSpeedProperty = providerType.GetProperty("moveSpeed", BindingFlags.Instance | BindingFlags.Public);
+        moveSpeedField = GetFieldInTypeHierarchy(providerType, "m_MoveSpeed");
+    }
+
+    private float GetMoveProviderSpeed(float fallback)
+    {
+        CacheMoveProviderSpeedAccessors();
+
+        if (continuousMoveProvider == null)
+        {
+            return fallback;
+        }
+
+        if (moveSpeedProperty != null)
+        {
+            return (float)moveSpeedProperty.GetValue(continuousMoveProvider);
+        }
+
+        if (moveSpeedField != null)
+        {
+            return (float)moveSpeedField.GetValue(continuousMoveProvider);
+        }
+
+        return fallback;
+    }
+
+    private void SetMoveProviderSpeed(float speed)
+    {
+        CacheMoveProviderSpeedAccessors();
+
+        if (continuousMoveProvider == null)
+        {
+            return;
+        }
+
+        if (moveSpeedProperty != null)
+        {
+            moveSpeedProperty.SetValue(continuousMoveProvider, speed);
+        }
+        else if (moveSpeedField != null)
+        {
+            moveSpeedField.SetValue(continuousMoveProvider, speed);
+        }
+    }
+
+    private FieldInfo GetFieldInTypeHierarchy(Type type, string fieldName)
+    {
+        while (type != null)
+        {
+            FieldInfo field = type.GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic);
+            if (field != null)
+            {
+                return field;
+            }
+
+            type = type.BaseType;
+        }
+
+        return null;
     }
 
     private bool HasLegacyAxis(string xAxis, string yAxis, float threshold)
@@ -1196,6 +1369,24 @@ public class QuestManager : MonoBehaviour
         }
 
         return group;
+    }
+
+    private void ClearAllFireObjects()
+    {
+        FireNode[] fires = FindObjectsOfType<FireNode>(true);
+
+        for (int i = 0; i < fires.Length; i++)
+        {
+            if (fires[i] != null)
+            {
+                Destroy(fires[i].gameObject);
+            }
+        }
+
+        activeFires.Clear();
+        totalFiresDuringEmergency = 0;
+        extinguishedFiresDuringEmergency = 0;
+        fireEmergencyActive = false;
     }
 
     private string BuildTargetLabel(string verb, int target, string objectName)
