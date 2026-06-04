@@ -17,7 +17,8 @@ public class RobotNpcBehavior : MonoBehaviour
     public float happyInterval = 10f;
 
     [Header("Looked At Reaction")]
-    public string blushedParameter = "IsBlushed";
+    public string blushedParameter = "IsBlush";
+    public string stopBlushedParameter = "IsNotLooking";
     public float lookedAtDuration = 5f;
     public float gazeAngle = 12f;
     public bool requireLineOfSight = true;
@@ -25,25 +26,26 @@ public class RobotNpcBehavior : MonoBehaviour
 
     [Header("Not Visible Reaction")]
     public string sleepParameter = "IsSleep";
+    public string stopSleepParameter = "IsLooking";
     public float notVisibleDuration = 5f;
 
     [Header("Bool Parameter Pulse")]
     public float boolPulseDuration = 0.25f;
 
     private Renderer[] renderers;
-    private float nextHappyTime;
+    private float happyTimer;
     private float lookedAtTimer;
     private float notVisibleTimer;
     private bool blushedTriggered;
     private bool sleepTriggered;
-    private readonly bool[] boolResetPending = new bool[3];
-    private readonly float[] boolResetTimes = new float[3];
+    private readonly bool[] boolResetPending = new bool[4];
+    private readonly float[] boolResetTimes = new float[4];
 
     void Awake()
     {
         ResolveReferences();
         CacheRenderers();
-        nextHappyTime = Time.time + Mathf.Max(0.01f, happyInterval);
+        happyTimer = 0f;
     }
 
     void Update()
@@ -121,13 +123,21 @@ public class RobotNpcBehavior : MonoBehaviour
 
     private void HandleGreeting()
     {
-        if (Time.time < nextHappyTime)
+        if (blushedTriggered || sleepTriggered)
+        {
+            happyTimer = 0f;
+            return;
+        }
+
+        happyTimer += Time.deltaTime;
+
+        if (happyTimer < Mathf.Max(0.01f, happyInterval))
         {
             return;
         }
 
         TriggerAnimatorParameter(happyParameter, 0);
-        nextHappyTime = Time.time + Mathf.Max(0.01f, happyInterval);
+        happyTimer = 0f;
     }
 
     private void HandleLookedAtReaction()
@@ -146,6 +156,11 @@ public class RobotNpcBehavior : MonoBehaviour
             return;
         }
 
+        if (blushedTriggered)
+        {
+            TriggerAnimatorParameter(stopBlushedParameter, 3);
+        }
+
         lookedAtTimer = 0f;
         blushedTriggered = false;
     }
@@ -154,6 +169,11 @@ public class RobotNpcBehavior : MonoBehaviour
     {
         if (IsVisibleToCamera())
         {
+            if (sleepTriggered)
+            {
+                TriggerAnimatorParameter(stopSleepParameter, 3);
+            }
+
             notVisibleTimer = 0f;
             sleepTriggered = false;
             return;
@@ -306,6 +326,7 @@ public class RobotNpcBehavior : MonoBehaviour
         TryResetBoolParameter(happyParameter, 0);
         TryResetBoolParameter(blushedParameter, 1);
         TryResetBoolParameter(sleepParameter, 2);
+        TryResetBoolParameter(stopBlushedParameter, 3);
     }
 
     private void TryResetBoolParameter(string parameterName, int boolPulseIndex)
