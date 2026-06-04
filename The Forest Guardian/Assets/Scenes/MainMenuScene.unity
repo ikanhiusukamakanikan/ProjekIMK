@@ -1839,6 +1839,7 @@ GameObject:
   - component: {fileID: 290872414}
   - component: {fileID: 290872413}
   - component: {fileID: 290872412}
+  - component: {fileID: 290872416}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2074,6 +2075,31 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!143 &290872416
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 290872410}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &306764350
 GameObject:
   m_ObjectHideFlags: 0
@@ -4396,7 +4422,7 @@ MonoBehaviour:
   blushedParameter: IsBlush
   stopBlushedParameter: IsNotLooking
   lookedAtDuration: 5
-  gazeAngle: 12
+  gazeAngle: 30
   requireLineOfSight: 1
   lineOfSightMask:
     serializedVersion: 2
@@ -5013,7 +5039,7 @@ MonoBehaviour:
   m_Camera: {fileID: 290872415}
   m_OriginBaseGameObject: {fileID: 290872410}
   m_CameraFloorOffsetObject: {fileID: 1700187478}
-  m_RequestedTrackingOriginMode: 1
+  m_RequestedTrackingOriginMode: 2
   m_CameraYOffset: 1.7
 --- !u!143 &777480710
 CharacterController:

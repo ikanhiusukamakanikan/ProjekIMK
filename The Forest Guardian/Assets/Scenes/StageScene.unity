@@ -2575,7 +2575,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 626, y: -0}
+  m_AnchoredPosition: {x: 554.2, y: -0}
   m_SizeDelta: {x: 620, y: 486}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &192836753
@@ -7493,7 +7493,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: MISSION ACCOMPLISED
+  m_text: MISSION FAILED
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 99474a53857e75e4e9a8885304d649f6, type: 2}
   m_sharedMaterial: {fileID: 7514572036315271711, guid: 99474a53857e75e4e9a8885304d649f6,
@@ -9790,7 +9790,7 @@ MonoBehaviour:
   m_Camera: {fileID: 290872415}
   m_OriginBaseGameObject: {fileID: 777480707}
   m_CameraFloorOffsetObject: {fileID: 1700187478}
-  m_RequestedTrackingOriginMode: 1
+  m_RequestedTrackingOriginMode: 2
   m_CameraYOffset: 1.7
 --- !u!143 &777480710
 CharacterController:

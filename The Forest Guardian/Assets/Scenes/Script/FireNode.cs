@@ -248,15 +248,9 @@ public class FireNode : MonoBehaviour
         currentHealth -= dmg;
         Log($"DAMAGE {dmg} | HP {currentHealth}");
 
-        if (Time.time >= nextExtinguishSoundTime)
-        {
-            SoundManager.PlaySound(SoundType.FireExtinguish);
-            nextExtinguishSoundTime = Time.time + 3f;
-        }
-
         UpdateVisual();
 
-        if (currentHealth <= 20f)
+        if (currentHealth <= 40f)
         {
             Extinguish();
         }
@@ -302,6 +296,7 @@ public class FireNode : MonoBehaviour
 
         if (fireParticle != null)
         {
+            SoundManager.PlaySound(SoundType.FireExtinguish);
             fireParticle.Stop();
         }
 
