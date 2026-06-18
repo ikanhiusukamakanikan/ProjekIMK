@@ -9116,6 +9116,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 628890138}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: ea434de1648178d409fdab30ff8edf16,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1517761418}
     - targetCorrespondingSourceObject: {fileID: 6502182839619065283, guid: ea434de1648178d409fdab30ff8edf16,
         type: 3}
       insertIndex: -1
@@ -30151,6 +30155,62 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TreeManager
   treeParent: {fileID: 354534238}
   allTrees: []
+--- !u!1 &1517761417
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1517761418}
+  - component: {fileID: 1517761419}
+  m_Layer: 0
+  m_Name: RobotSpawnpoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1517761418
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1517761417}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1366649418}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1517761419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1517761417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dca6e4a45a43a5c449e047c3d2da1137, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NPCRobotSpawner
+  spawnPoint: {fileID: 1517761418}
+  robotPrefab: {fileID: 684757329076833625, guid: e316295545149e44eada8fc5d8221f40,
+    type: 3}
+  playerTransform: {fileID: 777480708}
+  idleThreshold: 0.1
+  idleDuration: 10
+  maxDistance: 5
+  spawnDuration: 1.5
+  despawnDuration: 1.5
+  spawnHeight: 5
+  spawnEase: 12
+  despawnEase: 11
 --- !u!1 &1522427014
 GameObject:
   m_ObjectHideFlags: 0
