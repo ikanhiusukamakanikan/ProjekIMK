@@ -18,7 +18,11 @@ public class MainMenuManager : MonoBehaviour
         Exit,
         StoryMode,
         SandboxMode,
-        ReturnToMainMenu
+        ReturnToMainMenu,
+        AboutUs,
+        Credits,
+        CloseAboutUs,
+        CloseCredits
     }
 
     [System.Serializable]
@@ -31,7 +35,13 @@ public class MainMenuManager : MonoBehaviour
     [Header("Buttons")]
     public MenuButton playButton;
     public MenuButton settingsButton;
+    public MenuButton aboutUsButton;
+    public MenuButton creditsButton;
     public MenuButton exitButton;
+
+    [Header("Panel Back Buttons")]
+    public MenuButton aboutUsBackButton;
+    public MenuButton creditsBackButton;
 
     [Header("Stage Buttons")]
     public MenuButton storyModeButton;
@@ -55,6 +65,16 @@ public class MainMenuManager : MonoBehaviour
     public CanvasGroup settingsCanvasGroup;
     public bool hideSettingsOnStart = true;
     public bool keepMainMenuVisibleWhenSettingsOpen = true;
+
+    [Header("About Us Panel")]
+    public GameObject aboutUsPanel;
+    public CanvasGroup aboutUsCanvasGroup;
+    public bool hideAboutUsOnStart = true;
+
+    [Header("Credits Panel")]
+    public GameObject creditsPanel;
+    public CanvasGroup creditsCanvasGroup;
+    public bool hideCreditsOnStart = true;
 
     [Header("Hover Animation")]
     public float hoverFadeDuration = 0.16f;
@@ -82,11 +102,20 @@ public class MainMenuManager : MonoBehaviour
 
     private readonly Dictionary<GameObject, ButtonRuntime> runtimes = new();
     private Tween settingsTween;
+    private Tween aboutUsTween;
+    private Tween creditsTween;
     private Sequence menuTransitionTween;
     private Vector3 settingsVisibleScale = Vector3.one;
+    private Vector3 aboutUsVisibleScale = Vector3.one;
+    private Vector3 creditsVisibleScale = Vector3.one;
     private Vector2 mainMenuVisiblePosition;
     private Vector2 stageVisiblePosition;
+    private bool settingsScaleCached;
+    private bool aboutUsScaleCached;
+    private bool creditsScaleCached;
     private bool settingsOpen;
+    private bool aboutUsOpen;
+    private bool creditsOpen;
     private bool stageOpen;
     private bool menuTransitionPlaying;
 
@@ -94,12 +123,17 @@ public class MainMenuManager : MonoBehaviour
     {
         RegisterButton(playButton, MenuAction.Play);
         RegisterButton(settingsButton, MenuAction.Settings);
+        RegisterButton(aboutUsButton, MenuAction.AboutUs);
+        RegisterButton(creditsButton, MenuAction.Credits);
         RegisterButton(exitButton, MenuAction.Exit);
+        RegisterButton(aboutUsBackButton, MenuAction.CloseAboutUs);
+        RegisterButton(creditsBackButton, MenuAction.CloseCredits);
         RegisterButton(storyModeButton, MenuAction.StoryMode);
         RegisterButton(sandboxModeButton, MenuAction.SandboxMode);
         RegisterButton(returnToMainMenuButton, MenuAction.ReturnToMainMenu);
         CacheMenuPanels();
-        CacheSettingsPanel();
+        CacheInfoPanels();
+        SyncInfoPanelOpenStates();
     }
 
     void Start()
@@ -113,11 +147,25 @@ public class MainMenuManager : MonoBehaviour
         {
             SetSettingsPanelImmediate(false);
         }
+
+        if (hideAboutUsOnStart)
+        {
+            SetAboutUsPanelImmediate(false);
+        }
+
+        if (hideCreditsOnStart)
+        {
+            SetCreditsPanelImmediate(false);
+        }
+
+        EnsureOnlyOneInfoPanelImmediate();
     }
 
     void OnDestroy()
     {
         settingsTween?.Kill();
+        aboutUsTween?.Kill();
+        creditsTween?.Kill();
         menuTransitionTween?.Kill();
 
         foreach (ButtonRuntime runtime in runtimes.Values)
@@ -143,10 +191,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void OpenStageMenu()
     {
-        if (settingsOpen)
-        {
-            SetSettingsPanel(false);
-        }
+        CloseAllInfoPanelsImmediate();
 
         SetStagePanel(true);
     }
@@ -182,6 +227,36 @@ public class MainMenuManager : MonoBehaviour
     public void ToggleSettings()
     {
         SetSettingsPanel(!settingsOpen);
+    }
+
+    public void OpenAboutUs()
+    {
+        SetAboutUsPanel(true);
+    }
+
+    public void CloseAboutUs()
+    {
+        SetAboutUsPanel(false);
+    }
+
+    public void ToggleAboutUs()
+    {
+        SetAboutUsPanel(!aboutUsOpen);
+    }
+
+    public void OpenCredits()
+    {
+        SetCreditsPanel(true);
+    }
+
+    public void CloseCredits()
+    {
+        SetCreditsPanel(false);
+    }
+
+    public void ToggleCredits()
+    {
+        SetCreditsPanel(!creditsOpen);
     }
 
     public void ExitGame()
@@ -267,6 +342,18 @@ public class MainMenuManager : MonoBehaviour
             case MenuAction.Settings:
                 OpenSettings();
                 break;
+            case MenuAction.AboutUs:
+                OpenAboutUs();
+                break;
+            case MenuAction.Credits:
+                OpenCredits();
+                break;
+            case MenuAction.CloseAboutUs:
+                CloseAboutUs();
+                break;
+            case MenuAction.CloseCredits:
+                CloseCredits();
+                break;
             case MenuAction.Exit:
                 ExitGame();
                 break;
@@ -303,6 +390,14 @@ public class MainMenuManager : MonoBehaviour
                 return playButton;
             case MenuAction.Settings:
                 return settingsButton;
+            case MenuAction.AboutUs:
+                return aboutUsButton;
+            case MenuAction.Credits:
+                return creditsButton;
+            case MenuAction.CloseAboutUs:
+                return aboutUsBackButton;
+            case MenuAction.CloseCredits:
+                return creditsBackButton;
             case MenuAction.Exit:
                 return exitButton;
             case MenuAction.StoryMode:
@@ -480,84 +575,268 @@ public class MainMenuManager : MonoBehaviour
         rectTransform.anchoredPosition = position;
     }
 
-    private void CacheSettingsPanel()
+    private enum InfoPanelType
     {
-        if (settingsPanel == null)
+        Settings,
+        AboutUs,
+        Credits
+    }
+
+    private void CacheInfoPanels()
+    {
+        settingsCanvasGroup = CacheInfoPanel(settingsPanel, settingsCanvasGroup, ref settingsVisibleScale, ref settingsScaleCached);
+        aboutUsCanvasGroup = CacheInfoPanel(aboutUsPanel, aboutUsCanvasGroup, ref aboutUsVisibleScale, ref aboutUsScaleCached);
+        creditsCanvasGroup = CacheInfoPanel(creditsPanel, creditsCanvasGroup, ref creditsVisibleScale, ref creditsScaleCached);
+    }
+
+    private CanvasGroup CacheInfoPanel(
+        GameObject panel,
+        CanvasGroup canvasGroup,
+        ref Vector3 visibleScale,
+        ref bool scaleCached
+    )
+    {
+        if (panel == null)
         {
-            return;
+            return canvasGroup;
         }
 
-        if (settingsCanvasGroup == null)
+        if (canvasGroup == null)
         {
-            settingsCanvasGroup = settingsPanel.GetComponent<CanvasGroup>();
+            canvasGroup = panel.GetComponent<CanvasGroup>();
         }
 
-        if (settingsCanvasGroup == null)
+        if (canvasGroup == null)
         {
-            settingsCanvasGroup = settingsPanel.AddComponent<CanvasGroup>();
+            canvasGroup = panel.AddComponent<CanvasGroup>();
         }
 
-        settingsVisibleScale = settingsPanel.transform.localScale;
+        if (!scaleCached)
+        {
+            visibleScale = panel.transform.localScale;
+            scaleCached = true;
+        }
+
+        return canvasGroup;
     }
 
     private void SetSettingsPanel(bool open)
     {
-        CacheSettingsPanel();
+        CacheInfoPanels();
 
         if (settingsPanel == null || settingsCanvasGroup == null)
         {
             return;
         }
 
+        if (IsInfoPanelInState(settingsPanel, settingsOpen, open))
+        {
+            return;
+        }
+
+        if (open)
+        {
+            CloseOtherInfoPanelsImmediate(InfoPanelType.Settings);
+        }
+
         settingsOpen = open;
         settingsTween?.Kill();
-        settingsPanel.SetActive(true);
-        settingsCanvasGroup.interactable = open;
-        settingsCanvasGroup.blocksRaycasts = open;
+        settingsTween = PlayInfoPanelTween(settingsPanel, settingsCanvasGroup, settingsVisibleScale, open, () => settingsTween = null);
+    }
+
+    private void SetSettingsPanelImmediate(bool open)
+    {
+        CacheInfoPanels();
+
+        SetInfoPanelImmediate(settingsPanel, settingsCanvasGroup, ref settingsTween, ref settingsOpen, settingsVisibleScale, open);
+    }
+
+    private void SetAboutUsPanel(bool open)
+    {
+        CacheInfoPanels();
+
+        if (aboutUsPanel == null || aboutUsCanvasGroup == null)
+        {
+            return;
+        }
+
+        if (IsInfoPanelInState(aboutUsPanel, aboutUsOpen, open))
+        {
+            return;
+        }
+
+        if (open)
+        {
+            CloseOtherInfoPanelsImmediate(InfoPanelType.AboutUs);
+        }
+
+        aboutUsOpen = open;
+        aboutUsTween?.Kill();
+        aboutUsTween = PlayInfoPanelTween(aboutUsPanel, aboutUsCanvasGroup, aboutUsVisibleScale, open, () => aboutUsTween = null);
+    }
+
+    private void SetAboutUsPanelImmediate(bool open)
+    {
+        CacheInfoPanels();
+
+        SetInfoPanelImmediate(aboutUsPanel, aboutUsCanvasGroup, ref aboutUsTween, ref aboutUsOpen, aboutUsVisibleScale, open);
+    }
+
+    private void SetCreditsPanel(bool open)
+    {
+        CacheInfoPanels();
+
+        if (creditsPanel == null || creditsCanvasGroup == null)
+        {
+            return;
+        }
+
+        if (IsInfoPanelInState(creditsPanel, creditsOpen, open))
+        {
+            return;
+        }
+
+        if (open)
+        {
+            CloseOtherInfoPanelsImmediate(InfoPanelType.Credits);
+        }
+
+        creditsOpen = open;
+        creditsTween?.Kill();
+        creditsTween = PlayInfoPanelTween(creditsPanel, creditsCanvasGroup, creditsVisibleScale, open, () => creditsTween = null);
+    }
+
+    private void SetCreditsPanelImmediate(bool open)
+    {
+        CacheInfoPanels();
+
+        SetInfoPanelImmediate(creditsPanel, creditsCanvasGroup, ref creditsTween, ref creditsOpen, creditsVisibleScale, open);
+    }
+
+    private Tween PlayInfoPanelTween(
+        GameObject panel,
+        CanvasGroup canvasGroup,
+        Vector3 visibleScale,
+        bool open,
+        TweenCallback onComplete
+    )
+    {
+        panel.SetActive(true);
+        canvasGroup.interactable = open;
+        canvasGroup.blocksRaycasts = open;
 
         if (open)
         {
             SoundManager.PlaySound(SoundType.UIPopup);
-            settingsCanvasGroup.alpha = 0f;
-            settingsPanel.transform.localScale = settingsVisibleScale * settingsHiddenScale;
+            canvasGroup.alpha = 0f;
+            panel.transform.localScale = visibleScale * settingsHiddenScale;
         }
         else
         {
             SoundManager.PlaySound(SoundType.UIClose);
         }
 
-        settingsTween = DOTween.Sequence()
+        return DOTween.Sequence()
             .SetUpdate(true)
-            .SetTarget(settingsPanel)
-            .Append(settingsCanvasGroup.DOFade(open ? 1f : 0f, Mathf.Max(0.01f, settingsFadeDuration)))
-            .Join(settingsPanel.transform.DOScale(open ? settingsVisibleScale : settingsVisibleScale * settingsHiddenScale, Mathf.Max(0.01f, settingsFadeDuration)))
+            .SetTarget(panel)
+            .Append(canvasGroup.DOFade(open ? 1f : 0f, Mathf.Max(0.01f, settingsFadeDuration)))
+            .Join(panel.transform.DOScale(open ? visibleScale : visibleScale * settingsHiddenScale, Mathf.Max(0.01f, settingsFadeDuration)))
             .SetEase(settingsEase)
             .OnComplete(() =>
             {
-                settingsCanvasGroup.interactable = open;
-                settingsCanvasGroup.blocksRaycasts = open;
-                settingsPanel.SetActive(open);
-                settingsTween = null;
+                canvasGroup.interactable = open;
+                canvasGroup.blocksRaycasts = open;
+                panel.SetActive(open);
+                onComplete?.Invoke();
             });
     }
 
-    private void SetSettingsPanelImmediate(bool open)
+    private void SetInfoPanelImmediate(
+        GameObject panel,
+        CanvasGroup canvasGroup,
+        ref Tween tween,
+        ref bool isOpen,
+        Vector3 visibleScale,
+        bool open
+    )
     {
-        CacheSettingsPanel();
-
-        if (settingsPanel == null || settingsCanvasGroup == null)
+        if (panel == null || canvasGroup == null)
         {
             return;
         }
 
-        settingsOpen = open;
-        settingsTween?.Kill();
-        settingsTween = null;
-        settingsPanel.SetActive(open);
-        settingsCanvasGroup.alpha = open ? 1f : 0f;
-        settingsCanvasGroup.interactable = open;
-        settingsCanvasGroup.blocksRaycasts = open;
-        settingsPanel.transform.localScale = open ? settingsVisibleScale : settingsVisibleScale * settingsHiddenScale;
+        isOpen = open;
+        tween?.Kill();
+        tween = null;
+        panel.SetActive(open);
+        canvasGroup.alpha = open ? 1f : 0f;
+        canvasGroup.interactable = open;
+        canvasGroup.blocksRaycasts = open;
+        panel.transform.localScale = open ? visibleScale : visibleScale * settingsHiddenScale;
+    }
+
+    private bool IsInfoPanelInState(GameObject panel, bool isOpen, bool open)
+    {
+        return isOpen == open && panel != null && panel.activeSelf == open;
+    }
+
+    private void CloseOtherInfoPanelsImmediate(InfoPanelType activePanel)
+    {
+        if (activePanel != InfoPanelType.Settings)
+        {
+            SetSettingsPanelImmediate(false);
+        }
+
+        if (activePanel != InfoPanelType.AboutUs)
+        {
+            SetAboutUsPanelImmediate(false);
+        }
+
+        if (activePanel != InfoPanelType.Credits)
+        {
+            SetCreditsPanelImmediate(false);
+        }
+    }
+
+    private void CloseAllInfoPanelsImmediate()
+    {
+        SetSettingsPanelImmediate(false);
+        SetAboutUsPanelImmediate(false);
+        SetCreditsPanelImmediate(false);
+    }
+
+    private void EnsureOnlyOneInfoPanelImmediate()
+    {
+        bool foundOpenPanel = false;
+
+        if (settingsOpen)
+        {
+            foundOpenPanel = true;
+        }
+
+        if (aboutUsOpen)
+        {
+            if (foundOpenPanel)
+            {
+                SetAboutUsPanelImmediate(false);
+            }
+            else
+            {
+                foundOpenPanel = true;
+            }
+        }
+
+        if (creditsOpen && foundOpenPanel)
+        {
+            SetCreditsPanelImmediate(false);
+        }
+    }
+
+    private void SyncInfoPanelOpenStates()
+    {
+        settingsOpen = settingsPanel != null && settingsPanel.activeSelf;
+        aboutUsOpen = aboutUsPanel != null && aboutUsPanel.activeSelf;
+        creditsOpen = creditsPanel != null && creditsPanel.activeSelf;
     }
 
     private class ButtonRuntime

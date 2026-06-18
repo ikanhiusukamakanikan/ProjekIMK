@@ -30203,9 +30203,9 @@ MonoBehaviour:
   robotPrefab: {fileID: 684757329076833625, guid: e316295545149e44eada8fc5d8221f40,
     type: 3}
   playerTransform: {fileID: 777480708}
-  idleThreshold: 0.1
-  idleDuration: 10
-  maxDistance: 5
+  idleThreshold: 0.01
+  idleDuration: 15
+  maxDistance: 15
   spawnDuration: 1.5
   despawnDuration: 1.5
   spawnHeight: 5
